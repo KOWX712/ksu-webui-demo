@@ -1,0 +1,12 @@
+{
+    "title": "KSU WebUI demo",
+    "icon": "icon.png",
+    "windowResize": false,
+    "backHandler": false,
+    "exitConfirm": true,
+    "description": [
+        "remove this description",
+        "config file for Webui X.",
+        "More references on https://mmrl.dev/guide/webuix/config."
+    ]
+}

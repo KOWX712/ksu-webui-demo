@@ -1,0 +1,8 @@
+# Auto detect text files and perform LF normalization
+* text eol=lf
+
+# binary files
+modules/bin/**/** binary
+*.png binary
+*.gif binary
+*.jpg binary
