@@ -1,0 +1,57 @@
+@import url('https://mui.kernelsu.org/internal/insets.css');
+@import url('https://mui.kernelsu.org/internal/colors.css');
+
+:root {
+    /* WebUI X full screen inset */
+    --top-inset: var(--window-inset-top, 0px);
+    --bottom-inset: var(--window-inset-bottom, 0px);
+
+    /* Background colors */
+    --bg-primary: var(--background, #EDEDED);
+    --bg-secondary: var(--tonalSurface, #fff);
+
+    /* Text colors */
+    --text-primary: var(--onSurface, #000);
+
+    /* Button colors */
+    --btn-primary: var(--primary, #007bff);
+    --btn-primary-text: var(--onPrimary, #fff);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Background colors */
+        --bg-primary: var(--background, #151515);
+        --bg-secondary: var(--tonalSurface, #292929);
+
+        /* Text colors */
+        --text-primary: var(--onSurface, #eee);
+    }
+}
+
+body {
+    margin: 0;
+    padding-top: var(--top-inset);
+    padding-bottom: var(--bottom-inset);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+h3 {
+    user-select: none;
+}
+
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+    background-color: var(--btn-primary);
+    color: var(--btn-primary-text);
+    user-select: none;
+}
