@@ -55,3 +55,28 @@ h3 {
     color: var(--btn-primary-text);
     user-select: none;
 }
+
+.ripple-element {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 1;
+    animation: ripple-animation ease-out forwards;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.ripple.end {
+    opacity: 0;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(3);
+    }
+}
