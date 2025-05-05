@@ -12,6 +12,9 @@
 
     /* Text colors */
     --text-primary: var(--onSurface, #000);
+    
+    /* Border colors */
+    --border-color: var(--outlineVariant, #ccc);
 
     /* Button colors */
     --btn-primary: var(--primary, #007bff);
@@ -27,6 +30,9 @@
 
         /* Text colors */
         --text-primary: var(--onSurface, #eee);
+
+        /* Border colors */
+        --border-color: var(--outlineVariant, #636363);
     }
 }
 
@@ -36,24 +42,90 @@ body {
     padding-bottom: var(--bottom-inset);
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+}
+
+.header {
+    width: 100%;
+    text-align: center;
 }
 
 h3 {
     user-select: none;
 }
 
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.footer-placeholder {
+    height: 30px;
+}
+
 .btn {
     border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
+    border-radius: 8px;
+    padding: 8px 12px;
     font-weight: bold;
     background-color: var(--btn-primary);
     color: var(--btn-primary-text);
     user-select: none;
+}
+
+.content-container {
+    width: 90%;
+    max-width: 600px;
+    padding: 20px 0;
+    position: relative;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    box-sizing: border-box;
+
+    h3 {
+        margin: 0;
+    }
+}
+
+.content-container > * {
+    padding: 0 20px;
+}
+
+#monet-color-container {
+    display: none;
+}
+
+.copy-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    transition: all 0.2s ease;
+
+    svg {
+        fill: var(--border-color);
+        transition: all 0.2s ease;
+    }
+}
+
+.copy-btn:active {
+    border-color: var(--text-primary);
+
+    svg {
+        fill: var(--text-primary);
+    }
+}
+
+#monet-color-demo {
+    overflow: auto;
 }
 
 .ripple-element {
