@@ -83,6 +83,29 @@ async function checkWebuiX() {
 
         // Set status bar theme based on webui theme
         $ksuwebui_demo.setLightStatusBars(!$ksuwebui_demo.isDarkMode());
+
+        // Show monet color scheme demo
+        const content = document.getElementById("monet-color-demo");
+        document.getElementById('monet-color-container').style.display = "block";
+        fetch("https://mui.kernelsu.org/mmrl/colors.css")
+            .then((res) =>
+                res.text()
+            ).then((txt) => {
+                const span = document.createElement('span');
+                span.textContent = txt;
+                content.appendChild(span);
+
+                // Copy button to copy all monet colors
+                document.querySelector(".copy-btn").addEventListener("click", () => {
+                    navigator.clipboard.writeText(txt)
+                        .then(() => {
+                            toast("Monet colors copied to clipboard");
+                        })
+                        .catch(() => {
+                            toast("Failed to copy monet colors");
+                        });
+                });
+            });
     }
 }
 
