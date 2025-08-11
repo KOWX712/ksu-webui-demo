@@ -58,7 +58,7 @@ function checkKernelSU() {
 window.checkKernelSU = checkKernelSU;
 
 /**
- * Redirect to a link with am command
+ * Redirect to a link with am command / window.open
  * @param {string} link - The link to redirect in browser
  */
 function linkRedirect(link) {
@@ -66,9 +66,12 @@ function linkRedirect(link) {
     setTimeout(() => {
         exec(`am start -a android.intent.action.VIEW -d ${link}`, { env: { PATH: '/system/bin' }})
             .then(({ errno }) => {
-                if (errno !== 0) toast("Failed to open link");
+                if (errno !== 0) {
+                    toast("Failed to open link with exec");
+                    window.open(link, "_blank");
+                }
             });
-    },100);
+    }, 100);
 }
 window.linkRedirect = linkRedirect;
 
