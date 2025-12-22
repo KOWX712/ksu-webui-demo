@@ -515,3 +515,7 @@ body {
 .pm-error {
     color: var(--color-error);
 }
+
+.hide {
+    display: none;
+}

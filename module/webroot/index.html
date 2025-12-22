@@ -12,12 +12,12 @@
             <div class="header-content">KSU WebUI demo</div>
         </div>
         <!-- Inset demo -->
-        <div class="inset-demo top">
+        <div class="inset-demo top hide">
             <div class="corner">I'm top inset</div>
             <div class="corner">I'm top inset</div>
             <div class="corner">I'm top inset</div>
         </div>
-        <div class="inset-demo bottom">
+        <div class="inset-demo bottom hide">
             <div class="corner">I'm bottom inset</div>
             <div class="corner">I'm bottom inset</div>
             <div class="corner">I'm bottom inset</div>
@@ -25,13 +25,23 @@
         <!-- body content -->
         <div class="content">
             <div class="content-container">
+                <!-- exec and spawn demo -->
+                 <div class="title">exec, spawn</div>
                 <div class="button-container">
                     <button class="btn ripple-element" onclick="checkMagisk()">Magisk</button>
                     <button class="btn ripple-element" onclick="checkApatch()">APatch</button>
                     <button class="btn ripple-element" onclick="checkKernelSU()">KernelSU</button>
                 </div>
+                <!-- open link in external browser demo -->
+                 <div class="title">link redirect</div>
                 <div class="button-container">
                     <button class="btn ripple-element" onclick="linkRedirect('https://github.com/KOWX712/ksu-webui-demo')">Open GitHub</button>
+                </div>
+                <!-- Insets demo -->
+                 <div class="title">Inset</div>
+                <div class="button-container">
+                    <button class="btn ripple-element" onclick="toggleInsetHint()">Inset hint</button>
+                    <button class="btn ripple-element" onclick="toggleInset()">Inset toggle</button>
                 </div>
                 <!-- Monet color demo -->
                 <div class="title">Monet Colors</div>

@@ -1,4 +1,6 @@
-import { exec, spawn, toast, listPackages, getPackagesInfo } from "./assets/kernelsu.js";
+import { exec, spawn, toast, enableInsets, listPackages, getPackagesInfo } from "./assets/kernelsu.js";
+
+let insetState = true;
 
 /**
  * async ksu.exec demo
@@ -60,6 +62,7 @@ window.checkKernelSU = checkKernelSU;
 /**
  * Redirect to a link with am command / window.open
  * @param {string} link - The link to redirect in browser
+ * @returns {void}
  */
 function linkRedirect(link) {
     toast("Redirecting to " + link);
@@ -74,6 +77,33 @@ function linkRedirect(link) {
     }, 100);
 }
 window.linkRedirect = linkRedirect;
+
+/**
+ * Show or hide inset area hint
+ * @returns {void}
+ */
+function toggleInsetHint() {
+    document.querySelectorAll('.inset-demo').forEach(el => {
+        el.classList.toggle('hide');
+    });
+}
+window.toggleInsetHint = toggleInsetHint;
+
+/**
+ * Enable or disable Inset support
+ * @returns {void}
+ */
+function toggleInset() {
+    if (typeof ksu.enableInsets === 'undefined') {
+        toast("unsupported");
+        return;
+    }
+    insetState = !insetState;
+    enableInsets(insetState);
+    document.documentElement.style.setProperty('--inset-top', insetState ? 'var(--window-inset-top)' : '0px');
+    document.documentElement.style.setProperty('--inset-bottom', insetState ? 'var(--window-inset-bottom)' : '0px');
+}
+window.toggleInset = toggleInset;
 
 /**
  * Load and display packages in the PM container
