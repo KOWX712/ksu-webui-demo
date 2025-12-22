@@ -1,6 +1,6 @@
 # KernelSU WebUI demo
 
-- KernelSU WebUI demo for vanilla js with basic WebUI X support and basic Magisk module structure
+- KernelSU WebUI demo for vanilla js
 
 ## More about WebUI X support
 

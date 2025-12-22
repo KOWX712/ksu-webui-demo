@@ -8,25 +8,77 @@
         <script type="module" crossorigin src="index.js"></script>
     </head>
     <body>
-        <h3 class="header">KSU WebUI demo</h3>
+        <div class="header">
+            <div class="header-content">KSU WebUI demo</div>
+        </div>
+        <!-- Inset demo -->
+        <div class="inset-demo top">
+            <div class="corner">I'm top inset</div>
+            <div class="corner">I'm top inset</div>
+            <div class="corner">I'm top inset</div>
+        </div>
+        <div class="inset-demo bottom">
+            <div class="corner">I'm bottom inset</div>
+            <div class="corner">I'm bottom inset</div>
+            <div class="corner">I'm bottom inset</div>
+        </div>
+        <!-- body content -->
         <div class="content">
-            <div class="button-container">
-                <button class="btn ripple-element" onclick="checkMagisk()">Check Magisk</button>
-                <button class="btn ripple-element" onclick="checkApatch()">Check APatch</button>
-                <button class="btn ripple-element" onclick="checkKernelSU()">Check KernelSU</button>
-            </div>
-            <div class="button-container">
-                <button class="btn ripple-element" onclick="linkRedirect('https://github.com/KOWX712/ksu-webui-demo')">Open GitHub</button>
-            </div>
-            <div class="content-container" id="monet-color-container">
-                <h3>WebUI X Monet color scheme</h3>
-                <button class="copy-btn copy">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h167q11-35 43-57.5t70-22.5q40 0 71.5 22.5T594-840h166q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560h-80v120H280v-120h-80v560Zm280-560q17 0 28.5-11.5T520-800q0-17-11.5-28.5T480-840q-17 0-28.5 11.5T440-800q0 17 11.5 28.5T480-760Z"/></svg>
-                </button>
-                <pre id="monet-color-demo"></pre>
+            <div class="content-container">
+                <div class="button-container">
+                    <button class="btn ripple-element" onclick="checkMagisk()">Magisk</button>
+                    <button class="btn ripple-element" onclick="checkApatch()">APatch</button>
+                    <button class="btn ripple-element" onclick="checkKernelSU()">KernelSU</button>
+                </div>
+                <div class="button-container">
+                    <button class="btn ripple-element" onclick="linkRedirect('https://github.com/KOWX712/ksu-webui-demo')">Open GitHub</button>
+                </div>
+                <!-- Monet color demo -->
+                <div class="title">Monet Colors</div>
+                <div class="monet-color-container">
+                    <div class="color-block primary">Primary</div>
+                    <div class="color-block onPrimary">On Primary</div>
+                    <div class="color-block primaryContainer">Primary Container</div>
+                    <div class="color-block onPrimaryContainer">On Primary Container</div>
+                    <div class="color-block secondary">Secondary</div>
+                    <div class="color-block onSecondary">On Secondary</div>
+                    <div class="color-block secondaryContainer">Secondary Container</div>
+                    <div class="color-block onSecondaryContainer">On Secondary Container</div>
+                    <div class="color-block tertiary">Tertiary</div>
+                    <div class="color-block onTertiary">On Tertiary</div>
+                    <div class="color-block tertiaryContainer">Tertiary Container</div>
+                    <div class="color-block onTertiaryContainer">On Tertiary Container</div>
+                    <div class="color-block error">Error</div>
+                    <div class="color-block onError">On Error</div>
+                    <div class="color-block errorContainer">Error Container</div>
+                    <div class="color-block onErrorContainer">On Error Container</div>
+                    <div class="color-block background">Background</div>
+                    <div class="color-block onBackground">On Background</div>
+                    <div class="color-block surface">Surface</div>
+                    <div class="color-block onSurface">On Surface</div>
+                    <div class="color-block surfaceVariant">Surface Variant</div>
+                    <div class="color-block onSurfaceVariant">On Surface Variant</div>
+                    <div class="color-block outline">Outline</div>
+                    <div class="color-block outlineVariant">Outline Variant</div>
+                    <div class="color-block inverseSurface">Inverse Surface</div>
+                    <div class="color-block inverseOnSurface">Inverse On Surface</div>
+                    <div class="color-block inversePrimary">Inverse Primary</div>
+                    <div class="color-block surfaceBright">Surface Bright</div>
+                    <div class="color-block surfaceDim">Surface Dim</div>
+                    <div class="color-block surfaceContainer">Surface Container</div>
+                    <div class="color-block surfaceContainerLowest">Surface Container Lowest</div>
+                    <div class="color-block surfaceContainerLow">Surface Container Low</div>
+                    <div class="color-block surfaceContainerHigh">Surface Container High</div>
+                    <div class="color-block surfaceContainerHighest">Surface Container Highest</div>
+                    <div class="color-block shadow">Shadow</div>
+                </div>
+                <!-- package manager api demo -->
+                <div class="title">Package Manager API</div>
+                <div class="pm-container">
+                    <div class="loading">Loading packages...</div>
+                </div>
             </div>
         </div>
         <div class="footer-placeholder"></div>
     </body>
 </html>
-

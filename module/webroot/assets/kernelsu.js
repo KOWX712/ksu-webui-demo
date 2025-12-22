@@ -1,9 +1,6 @@
 /**
  * Imported from https://www.npmjs.com/package/kernelsu
- * Slightly modified version by KOWX712
- * Added full description
- * Simplified spawn function
- * Handle error on toast
+ * Modified version by KOWX712 - https://www.npmjs.com/package/kernelsu-alt
  */
 
 let callbackCounter = 0;
@@ -22,7 +19,7 @@ function getUniqueCallbackName(prefix) {
  *   - stdout {string} - Standard output from the command
  *   - stderr {string} - Standard error from the command
  */
-export function exec(command, options = {}) {
+function exec(command, options = {}) {
     return new Promise((resolve, reject) => {
         const callbackFuncName = getUniqueCallbackName("exec");
         window[callbackFuncName] = (errno, stdout, stderr) => {
@@ -80,7 +77,7 @@ class Stdio {
  *   - on(event, listener): Attach event listener ('exit', 'error')
  *   - emit(event, ...args): Emit events internally
  */
-export function spawn(command, args = [], options = {}) {
+function spawn(command, args = [], options = {}) {
     const child = {
         listeners: {},
         stdout: new Stdio(),
@@ -105,7 +102,6 @@ export function spawn(command, args = [], options = {}) {
         } else {
             setTimeout(() => {
                 child.stderr.emit("data", "ksu is not defined");
-                child.emit("error", "ksu is not defined");
                 child.emit("exit", 1);
             }, 0);
         }
@@ -117,18 +113,137 @@ export function spawn(command, args = [], options = {}) {
 }
 
 /**
+ * Request the WebView enter/exit full screen.
+ * @param {Boolean} isFullScreen - full screen state
+ */
+function fullScreen(isFullScreen) {
+    if (typeof ksu !== 'undefined') {
+        ksu.fullScreen(isFullScreen);
+    }
+}
+
+/**
+ * Added since KernelSU v3.0.0+
+ * Request the WebView to set padding to 0 or system bar insets
+ * Disabled by default
+ * Enabled automatically if there's a request on `internal/insets.css`
+ * @param {Boolean} isEnable - insets enable state
+ */
+function enableInsets(isEnable) {
+    if (typeof ksu !== 'undefined') {
+        ksu.enableInsets(isEnable);
+    }
+}
+
+/**
  * Show android toast message
  * @param {string} message - The message to display in toast
  * @returns {void}
  */
-export function toast(message) {
-    try {
-        if (typeof ksu !== 'undefined') {
-            ksu.toast(message);
-        } else {
-            console.log(message);
-        }
-    } catch (error) {   
-        console.error("Error displaying toast:", error);
+function toast(message) {
+    if (typeof ksu !== 'undefined') {
+        ksu.toast(message);
+    } else {
+        console.log(message);
     }
 }
+
+/**
+ * Added since KernelSU v2.1.2
+ * List installed packages
+ * @param {string} [type="all"] - The type of packages to list: "user", "system", or "all".
+ * @returns {Promise<string[]>} A promise that resolves to an array of package names.
+ */
+async function listPackages(type) {
+    if (typeof globalThis.ksu?.listPackages === 'function') {
+        try {
+            return JSON.parse(ksu.listPackages(type));
+        } catch (error) {
+            // Fallback to pm list package
+        }
+    }
+
+    return new Promise((resolve, reject) => {
+        const pmArgs = {
+            all: [],
+            user: ['-3'],
+            system: ['-s'],
+        };
+
+        if (!(type in pmArgs)) {
+            return reject(new Error(`Unknown listPackages type: ${type}`));
+        }
+
+        let pkgs = [];
+        let stderr = '';
+
+        const pm = spawn('pm', ['list', 'packages', ...pmArgs[type]]);
+        pm.stdout.on('data', (data) => {
+            if (data.trim() !== '') {
+                pkgs.push(data.trim().replace(/^package:/, ''));
+            }
+        });
+        pm.stderr.on('data', (data) => (stderr += data));
+        pm.on('exit', (code) => {
+            if (code !== 0) {
+                return reject(new Error(`pm process exited with code ${code}: ${stderr.trim()}`));
+            }
+            resolve(pkgs);
+        });
+        pm.on('error', (error) => {
+            reject(error);
+        });
+    });
+}
+
+/**
+ * @typedef {object} PackagesInfo
+ * @property {string} packageName - Package name of the application.
+ * @property {string} versionName - Version of the application.
+ * @property {number} versionCode - Version code of the application.
+ * @property {string} appLabel - Display name of the application.
+ * @property {boolean} isSystem - Whether the application is a system app.
+ * @property {number} uid - UID of the application.
+ */
+
+/**
+ * Added since KernelSU v2.1.2
+ * Retrieves detailed information for one or more packages.
+ * @param {string|string[]} pkg - A single package name or an array of package names.
+ * @returns {Promise<PackagesInfo|PackagesInfo[]>} Resolves with:
+ *   - a single package information object if one package is provided
+ *   - {}
+ *   - an array of package information objects if multiple packages are provided
+ *   - [{},{}]
+ */
+function getPackagesInfo(pkg) {
+    return new Promise((resolve, reject) => {
+        if (!pkg) {
+            return resolve([]);
+        }
+
+        if (typeof globalThis.ksu?.getPackagesInfo !== 'function') {
+            return reject(new Error("ksu.getPackagesInfo is not available."));
+        }
+
+        const pkgs = Array.isArray(pkg) ? pkg : [pkg];
+        if (pkgs.length === 0) {
+            return resolve([]);
+        }
+
+        try {
+            const infoJson = ksu.getPackagesInfo(JSON.stringify(pkgs));
+            const result = JSON.parse(infoJson);
+            
+            if (!Array.isArray(pkg) && result.length === 1) {
+                resolve(result[0]);
+            } else {
+                resolve(result);
+            }
+        } catch (error) {
+            reject(new Error(`Failed to get package info: ${error.message}`));
+        }
+    });
+}
+
+export { exec, spawn, fullScreen, enableInsets, toast, listPackages, getPackagesInfo };

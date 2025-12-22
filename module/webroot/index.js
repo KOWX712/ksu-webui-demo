@@ -1,7 +1,7 @@
-import { exec, spawn, toast } from "./assets/kernelsu.js";
+import { exec, spawn, toast, listPackages, getPackagesInfo } from "./assets/kernelsu.js";
 
 /**
- * ksu.exec demo
+ * async ksu.exec demo
  * suitable for short command, short response
  * example: grep -q
  * @returns {Promise<void>}
@@ -18,7 +18,7 @@ async function checkMagisk() {
 window.checkMagisk = checkMagisk;
 
 /**
- * Another ksu.exec demo
+ * ksu.exec demo
  * @returns {void}
  */
 function checkApatch() {
@@ -44,7 +44,7 @@ function checkKernelSU() {
     const output = spawn("ksud", ['debug', 'version'], { env: { PATH: '/data/adb/ksu/bin' }});
     output.stdout.on('data', (data) => {
         const version = data.split(':')[1].trim();
-        toast("KernelSU version:" + version);
+        toast("KernelSU version: " + version);
     });
     output.stderr.on('data', (data) => {
         console.error("Error:", data);
@@ -76,6 +76,105 @@ function linkRedirect(link) {
 window.linkRedirect = linkRedirect;
 
 /**
+ * Load and display packages in the PM container
+ * @returns {Promise<void>}
+ */
+async function loadPackages() {
+    const container = document.querySelector('.pm-container');
+
+    try {
+        const packages = await listPackages();
+        const packageInfos = await getPackagesInfo(packages);
+
+        const table = document.createElement('table');
+        table.className = 'pm-table';
+        const thead = document.createElement('thead');
+        thead.innerHTML = `
+            <tr>
+                <th>Icon</th>
+                <th>App Info</th>
+                <th>Type</th>
+                <th>UID</th>
+            </tr>
+        `;
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        packageInfos.forEach(pkg => {
+            const row = document.createElement('tr');
+
+            // Icon column with lazy loading
+            const iconCell = document.createElement('td');
+            const img = document.createElement('img');
+            img.className = 'app-icon';
+            img.dataset.src = `ksu://icon/${pkg.packageName}`;
+            img.loading = 'lazy';
+            iconCell.appendChild(img);
+            row.appendChild(iconCell);
+
+            // App info column
+            const infoCell = document.createElement('td');
+            infoCell.className = 'app-info';
+            infoCell.innerHTML = `
+                <div class="app-label">${pkg.appLabel}</div>
+                <div class="package-name">${pkg.packageName}</div>
+                <div class="version">${pkg.versionName} (${pkg.versionCode})</div>
+            `;
+            row.appendChild(infoCell);
+
+            // Type column
+            const typeCell = document.createElement('td');
+            typeCell.className = `app-type ${pkg.isSystem ? 'system' : 'user'}`;
+            typeCell.textContent = pkg.isSystem ? 'system' : 'user';
+            row.appendChild(typeCell);
+
+            // UID column
+            const uidCell = document.createElement('td');
+            uidCell.className = 'app-uid';
+            uidCell.textContent = pkg.uid;
+            row.appendChild(uidCell);
+
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        container.innerHTML = '';
+        container.appendChild(table);
+
+        // Setup lazy loading for icons
+        setupIconLazyLoading();
+    } catch (error) {
+        console.error('Error loading packages:', error);
+        container.innerHTML = '<div class="pm-error">Error loading packages</div>';
+    }
+}
+
+/**
+ * Setup IntersectionObserver for lazy loading app icons
+ * @returns {void}
+ */
+function setupIconLazyLoading() {
+    const images = document.querySelectorAll('.app-icon[data-src]');
+
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                observer.unobserve(img);
+            }
+        });
+    }, {
+        rootMargin: '100px',
+        threshold: 0.1
+    });
+    images.forEach(img => {
+        img.classList.add('lazy');
+        imageObserver.observe(img);
+    });
+}
+
+/**
  * Check if running on WebUI X
  * more reference on https://mmrl.dev/guide/webuix/sanitized-ids
  * @returns {Promise<void>}
@@ -86,29 +185,6 @@ async function checkWebuiX() {
 
         // Set status bar theme based on webui theme
         $ksuwebui_demo.setLightStatusBars(!$ksuwebui_demo.isDarkMode());
-
-        // Show monet color scheme demo
-        const content = document.getElementById("monet-color-demo");
-        document.getElementById('monet-color-container').style.display = "block";
-        fetch("https://mui.kernelsu.org/mmrl/colors.css")
-            .then((res) =>
-                res.text()
-            ).then((txt) => {
-                const span = document.createElement('span');
-                span.textContent = txt;
-                content.appendChild(span);
-
-                // Copy button to copy all monet colors
-                document.querySelector(".copy-btn").addEventListener("click", () => {
-                    navigator.clipboard.writeText(txt)
-                        .then(() => {
-                            toast("Monet colors copied to clipboard");
-                        })
-                        .catch(() => {
-                            toast("Failed to copy monet colors");
-                        });
-                });
-            });
     }
 }
 
@@ -189,4 +265,5 @@ window.addEventListener('scroll', () => {
 document.addEventListener('DOMContentLoaded', () => {
     checkWebuiX();
     applyRippleEffect();
+    loadPackages();
 });

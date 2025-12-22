@@ -1,59 +1,123 @@
-@import url('https://mui.kernelsu.org/internal/insets.css');
-@import url('https://mui.kernelsu.org/internal/colors.css');
+/* Import these for KernelSU or WebUI-X provided css properties (as root variable) */
+@import url('https://mui.kernelsu.org/internal/insets.css'); /* For windows insets value */
+@import url('https://mui.kernelsu.org/internal/colors.css'); /* For app's monet color */
 
 :root {
-    /* WebUI X full screen inset */
-    --top-inset: var(--window-inset-top, 0px);
-    --bottom-inset: var(--window-inset-bottom, 0px);
+    /* Insets */
+    --inset-top: var(--window-inset-top, 0px);
+    --inset-bottom: var(--window-inset-bottom, 0px);
 
-    /* Background colors */
-    --bg-primary: var(--background, #EDEDED);
-    --bg-secondary: var(--tonalSurface, #fff);
-
-    /* Text colors */
-    --text-primary: var(--onSurface, #000);
-    
-    /* Border colors */
-    --border-color: var(--outlineVariant, #ccc);
-
-    /* Button colors */
-    --btn-primary: var(--primary, #007bff);
-    --btn-primary-text: var(--onPrimary, #fff);
+    /* Color */
+    --color-primary: var(--primary, #6750A4);
+    --color-on-primary: var(--onPrimary, #FFFFFF);
+    --color-primary-container: var(--primaryContainer, #EADDFF);
+    --color-on-primary-container: var(--onPrimaryContainer, #4F378B);
+    --color-secondary: var(--secondary, #625B71);
+    --color-on-secondary: var(--onSecondary, #FFFFFF);
+    --color-secondary-container: var(--secondaryContainer, #E8DEF8);
+    --color-on-secondary-container: var(--on-secondaryContainer, #4A4458);
+    --color-tertiary: var(--tertiary, #7D5260);
+    --color-on-tertiary: var(--onTertiary, #FFFFFF);
+    --color-tertiary-container: var(--tertiaryContainer, #FFD8E4);
+    --color-on-tertiary-container: var(--onTertiaryContainer, #633B48);
+    --color-error: var(--error, #B3261E);
+    --color-on-error: var(--onError, #FFFFFF);
+    --color-error-container: var(--errorContainer, #F9DEDC);
+    --color-on-error-container: var(--onErrorContainer, #8C1D18);
+    --color-background: var(--background, #FEF7FF);
+    --color-on-background: var(--onBackground, #1D1B20);
+    --color-surface: var(--surface, #FEF7FF);
+    --color-on-surface: var(--onSurface, #1D1B20);
+    --color-surface-variant: var(--surfaceVariant, #E7E0EC);
+    --color-on-surface-variant: var(--onSurfaceVariant, #49454F);
+    --color-outline: var(--outline, #79747E);
+    --color-outline-variant: var(--outlineVariant, #CAC4D0);
+    --color-shadow: var(--shadow, #000000);
+    --color-inverse-surface: var(--inverseSurface, #322F35);
+    --color-inverse-on-surface: var(--inverseOnSurface, #F5EFF7);
+    --color-inverse-primary: var(--inversePrimary, #D0BCFF);
+    --color-surface-bright: var(--surfaceBright, #FEF7FF);
+    --color-surface-dim: var(--surfaceDim, #DED8E1);
+    --color-surface-container: var(--surfaceContainer, #F3EDF7);
+    --color-surface-container-lowest: var(--surfaceContainerLowest, #FFFFFF);
+    --color-surface-container-low: var(--surfaceContainerLow, #F7F2FA);
+    --color-surface-container-high: var(--surfaceContainerHigh, #ECE6F0);
+    --color-surface-container-highest: var(--surfaceContainerHighest, #E6E0E9);
 }
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
     :root {
-        /* Background colors */
-        --bg-primary: var(--background, #151515);
-        --bg-secondary: var(--tonalSurface, #292929);
-
-        /* Text colors */
-        --text-primary: var(--onSurface, #eee);
-
-        /* Border colors */
-        --border-color: var(--outlineVariant, #636363);
+        /* Color (Dark mode) */
+        --color-primary: var(--primary, #D0BCFF);
+        --color-on-primary: var(--onPrimary, #381E72);
+        --color-primary-container: var(--primaryContainer, #4F378B);
+        --color-on-primary-container: var(--onPrimaryContainer, #EADDFF);
+        --color-secondary: var(--secondary, #CCC2DC);
+        --color-on-secondary: var(--onSecondary, #332D41);
+        --color-secondary-container: var(--secondaryContainer, #4A4458);
+        --color-on-secondary-container: var(--onSecondaryContainer, #E8DEF8);
+        --color-tertiary: var(--tertiary, #EFB8C8);
+        --color-on-tertiary: var(--onTertiary, #492532);
+        --color-tertiary-container: var(--tertiaryContainer, #633B48);
+        --color-on-tertiary-container: var(--onTertiaryContainer, #FFD8E4);
+        --color-error: var(--error, #F2B8B5);
+        --color-on-error: var(--onError, #601410);
+        --color-error-container: var(--errorContainer, #8C1D18);
+        --color-on-error-container: var(--onErrorContainer, #F9DEDC);
+        --color-background: var(--background, #141218);
+        --color-on-background: var(--onBackground, #E6E0E9);
+        --color-surface: var(--surface, #141218);
+        --color-on-surface: var(--onSurface, #E6E0E9);
+        --color-surface-variant: var(--surfaceVariant, #49454F);
+        --color-on-surface-variant: var(--onSurfaceVariant, #CAC4D0);
+        --color-outline: var(--outline, #938F99);
+        --color-outline-variant: var(--outlineVariant, #49454F);
+        --color-shadow: var(--shadow, #000000);
+        --color-inverse-surface: var(--inverseSurface, #E6E0E9);
+        --color-inverse-on-surface: var(--inverseOnSurface, #322F35);
+        --color-inverse-primary: var(--inversePrimary, #6750A4);
+        --color-surface-bright: var(--surfaceBright, #3B383E);
+        --color-surface-dim: var(--surfaceDim, #141218);
+        --color-surface-container: var(--surfaceContainer, #211F26);
+        --color-surface-container-lowest: var(--surfaceContainerLowest, #0F0D13);
+        --color-surface-container-low: var(--surfaceContainerLow, #1D1B20);
+        --color-surface-container-high: var(--surfaceContainerHigh, #2B2930);
+        --color-surface-container-highest: var(--surfaceContainerHighest, #36343B);
     }
 }
 
 body {
     margin: 0;
-    padding-top: var(--top-inset);
-    padding-bottom: var(--bottom-inset);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    padding-top: var(--inset-top);
+    padding-bottom: var(--inset-bottom);
+    background-color: var(--color-background);
+    color: var(--color-on-background);
 }
 
 .header {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    text-align: center;
+    height: 64px;
+    padding-top: var(--inset-top);
+    background-color: var(--color-background);
+    z-index: 1;
 }
 
-h3 {
-    user-select: none;
+.header-content {
+    font-size: 1.2em;
+    width: 100%;
+    height: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
 .content {
+    margin-top: 64px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,67 +129,259 @@ h3 {
     height: 30px;
 }
 
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
 .btn {
     border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-weight: bold;
-    background-color: var(--btn-primary);
-    color: var(--btn-primary-text);
+    border-radius: 50px;
+    padding: 12px 16px;
+    font-weight: 500;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
     user-select: none;
 }
 
 .content-container {
-    width: 90%;
-    max-width: 600px;
-    padding: 20px 0;
-    position: relative;
-    background-color: var(--bg-secondary);
-    border-radius: 10px;
+    width:100%;
+    max-width: 768px;
+    padding: 0 16px;
     box-sizing: border-box;
-
-    h3 {
-        margin: 0;
-    }
-}
-
-.content-container > * {
-    padding: 0 20px;
-}
-
-#monet-color-container {
-    display: none;
-}
-
-.copy-btn {
-    position: absolute;
-    right: 10px;
-    top: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 5px;
-    background-color: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    transition: all 0.2s ease;
-
-    svg {
-        fill: var(--border-color);
-        transition: all 0.2s ease;
-    }
+    gap: 16px;
 }
 
-.copy-btn:active {
-    border-color: var(--text-primary);
-
-    svg {
-        fill: var(--text-primary);
-    }
+.title {
+    margin-top: 16px;
+    user-select: none;
 }
 
-#monet-color-demo {
-    overflow: auto;
+.monet-color-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.color-block {
+    height: 48px;
+    font-size: 0.8em;
+    border-radius: 8px;
+    display: flex;
+    align-items: end;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.color-block.primary {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+.color-block.onPrimary {
+    background-color: var(--color-on-primary);
+    color: var(--color-primary);
+}
+
+.color-block.primaryContainer {
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+}
+
+.color-block.onPrimaryContainer {
+    background-color: var(--color-on-primary-container);
+    color: var(--color-primary-container);
+}
+
+.color-block.secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-on-secondary);
+}
+
+.color-block.onSecondary {
+    background-color: var(--color-on-secondary);
+    color: var(--color-secondary);
+}
+
+.color-block.secondaryContainer {
+    background-color: var(--color-secondary-container);
+    color: var(--color-on-secondary-container);
+}
+
+.color-block.onSecondaryContainer {
+    background-color: var(--color-on-secondary-container);
+    color: var(--color-secondary-container);
+}
+
+.color-block.tertiary {
+    background-color: var(--color-tertiary);
+    color: var(--color-on-tertiary);
+}
+
+.color-block.onTertiary {
+    background-color: var(--color-on-tertiary);
+    color: var(--color-tertiary);
+}
+
+.color-block.tertiaryContainer {
+    background-color: var(--color-tertiary-container);
+    color: var(--color-on-tertiary-container);
+}
+
+.color-block.onTertiaryContainer {
+    background-color: var(--color-on-tertiary-container);
+    color: var(--color-tertiary-container);
+}
+
+.color-block.error {
+    background-color: var(--color-error);
+    color: var(--color-on-error);
+}
+
+.color-block.onError {
+    background-color: var(--color-on-error);
+    color: var(--color-error);
+}
+
+.color-block.errorContainer {
+    background-color: var(--color-error-container);
+    color: var(--color-on-error-container);
+}
+
+.color-block.onErrorContainer {
+    background-color: var(--color-on-error-container);
+    color: var(--color-error-container);
+}
+
+.color-block.background {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+}
+
+.color-block.onBackground {
+    background-color: var(--color-on-background);
+    color: var(--color-background);
+}
+
+.color-block.surface {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+}
+
+.color-block.onSurface {
+    background-color: var(--color-on-surface);
+    color: var(--color-surface);
+}
+
+.color-block.surfaceVariant {
+    background-color: var(--color-surface-variant);
+    color: var(--color-on-surface-variant);
+}
+
+.color-block.onSurfaceVariant {
+    background-color: var(--color-on-surface-variant);
+    color: var(--color-surface-variant);
+}
+
+.color-block.outline {
+    background-color: var(--color-outline);
+    color: var(--color-on-surface);
+}
+
+.color-block.outlineVariant {
+    background-color: var(--color-outline-variant);
+    color: var(--color-on-surface);
+}
+
+.color-block.shadow {
+    background-color: var(--color-shadow);
+    color: #FFFFFF;
+}
+
+.color-block.inverseSurface {
+    background-color: var(--color-inverse-surface);
+    color: var(--color-inverse-on-surface);
+}
+
+.color-block.inverseOnSurface {
+    background-color: var(--color-inverse-on-surface);
+    color: var(--color-inverse-surface);
+}
+
+.color-block.inversePrimary {
+    background-color: var(--color-inverse-primary);
+    color: var(--color-inverse-surface);
+}
+
+.color-block.surfaceBright {
+    background-color: var(--color-surface-bright);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceDim {
+    background-color: var(--color-surface-dim);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainer {
+    background-color: var(--color-surface-container);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainerLowest {
+    background-color: var(--color-surface-container-lowest);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainerLow {
+    background-color: var(--color-surface-container-low);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainerHigh {
+    background-color: var(--color-surface-container-high);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainerHighest {
+    background-color: var(--color-surface-container-highest);
+    color: var(--color-on-surface);
+}
+
+.inset-demo {
+    position: fixed;
+    width: 100%;
+    background-color: var(--color-tertiary-container);
+    color: var(--color-on-tertiary-container);
+    z-index: 1;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.inset-demo.top {
+    top: 0;
+    height: var(--inset-top);
+}
+
+.inset-demo.bottom {
+    bottom: 0;
+    height: var(--inset-bottom);
+}
+
+.corner {
+    text-align: center;
+    font-size: 0.5em;
+}
+
+.inset-demo.bottom .corner {
+    margin-top: auto;
 }
 
 .ripple-element {
@@ -151,4 +407,111 @@ h3 {
     to {
         transform: scale(3);
     }
+}
+
+.pm-container {
+    max-width: 100%;
+    overflow: auto;
+}
+
+.pm-table {
+    border-collapse: collapse;
+    background-color: var(--color-surface);
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: fixed;
+}
+
+.pm-table th,
+.pm-table td {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-outline);
+}
+
+.pm-table th {
+    background-color: var(--color-surface-container-high);
+    font-weight: 600;
+    color: var(--color-on-surface);
+    font-size: 0.9em;
+}
+
+.pm-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.app-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    background-color: var(--color-surface-container);
+    transition: opacity 0.3s ease;
+}
+
+.app-icon.lazy {
+    opacity: 0;
+}
+
+.app-icon:not(.lazy) {
+    opacity: 1;
+}
+
+.app-info {
+    max-width: 10em;
+}
+
+.app-label {
+    color: var(--color-on-surface);
+    margin-bottom: 4px;
+    font-size: 0.9em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.package-name {
+    color: var(--color-on-surface-variant);
+    font-size: 0.8em;
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.version {
+    color: var(--color-on-surface-variant);
+    font-size: 0.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.app-type {
+    text-transform: capitalize;
+    font-size: 0.9em;
+}
+
+.app-type.system {
+    color: var(--color-tertiary);
+}
+
+.app-type.user {
+    color: var(--color-primary);
+}
+
+.app-uid {
+    font-family: monospace;
+    color: var(--color-on-surface-variant);
+    font-size: 0.9em;
+}
+
+.loading,
+.pm-error {
+    text-align: center;
+    padding: 32px;
+    color: var(--color-on-surface-variant);
+}
+
+.pm-error {
+    color: var(--color-error);
 }
