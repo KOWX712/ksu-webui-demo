@@ -291,9 +291,70 @@ window.addEventListener('scroll', () => {
     scrollTimeout = setTimeout(() => isScrolling = false, 200);
 });
 
+/**
+ * Setup file upload demo with simulated progress
+ * @returns {void}
+ */
+function setupFileUpload() {
+    const fileInput = document.getElementById('fileUpload');
+    const fileInfo = document.getElementById('fileInfo');
+    const progressContainer = document.getElementById('uploadProgress');
+    const progressFill = progressContainer.querySelector('.progress-fill');
+    const progressText = document.getElementById('progressText');
+
+    if (!fileInput || !progressContainer) return;
+
+    fileInput.addEventListener('change', async (event) => {
+        const file = event.target.files[0];
+        if (!file) {
+            fileInfo.textContent = 'No file selected';
+            return;
+        }
+
+        fileInfo.textContent = file.name + " | ";
+        progressContainer.classList.remove('hide');
+        progressFill.style.width = '0%';
+        progressText.textContent = '0%';
+
+        const totalSize = file.size;
+        let offset = 0;
+        const chunkSize = 1024 * 1024; // 1MB chunks
+        const reader = new FileReader();
+
+        while (offset < totalSize) {
+            const blob = file.slice(offset, offset + chunkSize);
+                await new Promise((resolve, reject) => {
+                reader.onload = (e) => {
+                    const bytesRead = e.target.result.byteLength;
+                    offset += bytesRead;
+                    const percent = Math.min(100, Math.round((offset / totalSize) * 100));
+                    
+                    progressFill.style.width = `${percent}%`;
+                    progressText.textContent = `${percent}% (${(offset / 1024 / 1024).toFixed(2)} / ${(totalSize / 1024 / 1024).toFixed(2)} MB)`;
+                    resolve();
+                };
+                reader.onerror = () => {
+                    toast("Error reading file");
+                    reject(new Error("File read error"));
+                };
+                reader.readAsArrayBuffer(blob);
+            });
+
+            if (totalSize < 50 * 1024 * 1024) {
+                await new Promise(r => setTimeout(r, 50));
+            }
+        }
+
+        setTimeout(() => {
+            fileInput.value = '';
+        }, 2000);
+    });
+}
+
 // Initial load
 document.addEventListener('DOMContentLoaded', () => {
     checkWebuiX();
     applyRippleEffect();
     loadPackages();
+    setupFileUpload();
 });

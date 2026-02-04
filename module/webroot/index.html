@@ -44,6 +44,26 @@
                     <button class="btn ripple-element" onclick="window.confirm('Confirm dialog demo')">Confirm</button>
                     <button class="btn ripple-element" onclick="window.prompt('Prompt dialog demo')">Prompt</button>
                 </div>
+                <!-- File upload demo (supported since KernelSU 32265, APatch 11178)-->
+                <div class="title">File upload</div>
+                <div class="upload-container">
+                    <button class="btn ripple-element" onclick="document.getElementById('fileUpload').click()">Select File</button>
+                    <input type="file" id="fileUpload" class="hide">
+                    <!-- Type demo -->
+                    <!-- accepted suffixes -->
+                    <!-- <input type="file" multiple accept=".jpg,.png,"> -->
+                    <!-- accepted mime types -->
+                    <!-- <input type="file" accept="image/*"> -->
+                    <div id="uploadProgress" class="progress-container hide">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-status">
+                            <span id="fileInfo">No file selected</span>
+                            <span id="progressText">0%</span>
+                        </div>
+                    </div>
+                </div>
                 <!-- Insets demo -->
                 <div class="title">Inset</div>
                 <div class="button-container">
