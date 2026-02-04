@@ -1,4 +1,4 @@
-import { exec, spawn, toast, enableInsets, listPackages, getPackagesInfo } from "./assets/kernelsu.js";
+import { exec, spawn, toast, enableEdgeToEdge, listPackages, getPackagesInfo } from "./assets/kernelsu.js";
 
 let insetState = true;
 
@@ -93,15 +93,15 @@ window.toggleInsetHint = toggleInsetHint;
  * Enable or disable Inset support
  * @returns {void}
  */
-function toggleInset() {
-    if (typeof ksu.enableInsets === 'undefined') {
-        toast("unsupported");
-        return;
-    }
+async function toggleInset() {
     insetState = !insetState;
-    enableInsets(insetState);
-    document.documentElement.style.setProperty('--inset-top', insetState ? 'var(--window-inset-top)' : '0px');
-    document.documentElement.style.setProperty('--inset-bottom', insetState ? 'var(--window-inset-bottom)' : '0px');
+    const result = await enableEdgeToEdge(insetState);
+    if (result) {
+        document.documentElement.style.setProperty('--inset-top', insetState ? 'var(--window-inset-top)' : '0px');
+        document.documentElement.style.setProperty('--inset-bottom', insetState ? 'var(--window-inset-bottom)' : '0px');
+    } else {
+        toast("unsupported");
+    }
 }
 window.toggleInset = toggleInset;
 

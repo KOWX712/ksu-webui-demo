@@ -124,15 +124,28 @@ function fullScreen(isFullScreen) {
 
 /**
  * Added since KernelSU v3.0.0+
+ * Renamed from enableInsets to enableEdgeToEdge since KernelSU 32294
  * Request the WebView to set padding to 0 or system bar insets
  * Disabled by default
  * Enabled automatically if there's a request on `internal/insets.css`
  * @param {Boolean} isEnable - insets enable state
  */
-function enableInsets(isEnable) {
-    if (typeof ksu !== 'undefined') {
-        ksu.enableInsets(isEnable);
-    }
+function enableEdgeToEdge(isEnable) {
+    return new Promise((resolve, reject) => {
+        if (typeof ksu !== 'undefined') {
+            if (typeof ksu.enableEdgeToEdge === 'function') {
+                ksu.enableEdgeToEdge(isEnable);
+                resolve(true);
+            } else if (typeof ksu.enableInsets === 'function') {
+                ksu.enableInsets(isEnable); // Keep legacy support
+                resolve(true);
+            } else {
+                reject(new Error("ksu.enableEdgeToEdge or ksu.enableInsets is not available."));
+            }
+        } else {
+            reject(new Error("ksu is not defined."));
+        }
+    });
 }
 
 /**
@@ -246,4 +259,4 @@ function getPackagesInfo(pkg) {
     });
 }
 
-export { exec, spawn, fullScreen, enableInsets, toast, listPackages, getPackagesInfo };
+export { exec, spawn, fullScreen, enableEdgeToEdge, toast, listPackages, getPackagesInfo };
