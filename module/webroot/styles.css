@@ -1,11 +1,21 @@
 @import './theme.css';
+@import './assets/github.min.css';
+@import './assets/github-dark.min.css'(prefers-color-scheme: dark);
 
 body {
     margin: 0;
     padding-top: var(--inset-top);
     padding-bottom: var(--inset-bottom);
-    background-color: var(--color-background);
-    color: var(--color-on-background);
+    background-color: var(--color-surface-container);
+    color: var(--color-on-surface);
+}
+
+a {
+    cursor: default;
+}
+
+.hide {
+    display: none !important;
 }
 
 .header {
@@ -14,19 +24,41 @@ body {
     left: 0;
     width: 100%;
     height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
     padding-top: var(--inset-top);
-    background-color: var(--color-background);
+    background-color: var(--color-surface-container);
     z-index: 1;
+    user-select: none;
 }
 
 .header-content {
-    font-size: 1.2em;
+    font-size: 1.3em;
     width: 100%;
     height: 100%;
-    padding: 0 16px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
+}
+
+.back-btn {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: var(--color-surface-bright);
+
+    svg {
+        height: 24px;
+        width: 24px;
+        fill: var(--color-on-surface);
+    }
 }
 
 .content {
@@ -60,7 +92,7 @@ body {
 }
 
 .content-container {
-    width:100%;
+    width: 100%;
     max-width: 768px;
     padding: 0 16px;
     box-sizing: border-box;
@@ -73,228 +105,6 @@ body {
 .title {
     margin-top: 16px;
     user-select: none;
-}
-
-.monet-color-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-}
-
-.color-block {
-    height: 48px;
-    font-size: 0.8em;
-    border-radius: 8px;
-    display: flex;
-    align-items: end;
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-.color-block.primary {
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
-}
-
-.color-block.onPrimary {
-    background-color: var(--color-on-primary);
-    color: var(--color-primary);
-}
-
-.color-block.primaryContainer {
-    background-color: var(--color-primary-container);
-    color: var(--color-on-primary-container);
-}
-
-.color-block.onPrimaryContainer {
-    background-color: var(--color-on-primary-container);
-    color: var(--color-primary-container);
-}
-
-.color-block.secondary {
-    background-color: var(--color-secondary);
-    color: var(--color-on-secondary);
-}
-
-.color-block.onSecondary {
-    background-color: var(--color-on-secondary);
-    color: var(--color-secondary);
-}
-
-.color-block.secondaryContainer {
-    background-color: var(--color-secondary-container);
-    color: var(--color-on-secondary-container);
-}
-
-.color-block.onSecondaryContainer {
-    background-color: var(--color-on-secondary-container);
-    color: var(--color-secondary-container);
-}
-
-.color-block.tertiary {
-    background-color: var(--color-tertiary);
-    color: var(--color-on-tertiary);
-}
-
-.color-block.onTertiary {
-    background-color: var(--color-on-tertiary);
-    color: var(--color-tertiary);
-}
-
-.color-block.tertiaryContainer {
-    background-color: var(--color-tertiary-container);
-    color: var(--color-on-tertiary-container);
-}
-
-.color-block.onTertiaryContainer {
-    background-color: var(--color-on-tertiary-container);
-    color: var(--color-tertiary-container);
-}
-
-.color-block.error {
-    background-color: var(--color-error);
-    color: var(--color-on-error);
-}
-
-.color-block.onError {
-    background-color: var(--color-on-error);
-    color: var(--color-error);
-}
-
-.color-block.errorContainer {
-    background-color: var(--color-error-container);
-    color: var(--color-on-error-container);
-}
-
-.color-block.onErrorContainer {
-    background-color: var(--color-on-error-container);
-    color: var(--color-error-container);
-}
-
-.color-block.background {
-    background-color: var(--color-background);
-    color: var(--color-on-background);
-}
-
-.color-block.onBackground {
-    background-color: var(--color-on-background);
-    color: var(--color-background);
-}
-
-.color-block.surface {
-    background-color: var(--color-surface);
-    color: var(--color-on-surface);
-}
-
-.color-block.onSurface {
-    background-color: var(--color-on-surface);
-    color: var(--color-surface);
-}
-
-.color-block.surfaceVariant {
-    background-color: var(--color-surface-variant);
-    color: var(--color-on-surface-variant);
-}
-
-.color-block.onSurfaceVariant {
-    background-color: var(--color-on-surface-variant);
-    color: var(--color-surface-variant);
-}
-
-.color-block.outline {
-    background-color: var(--color-outline);
-    color: var(--color-on-surface);
-}
-
-.color-block.outlineVariant {
-    background-color: var(--color-outline-variant);
-    color: var(--color-on-surface);
-}
-
-.color-block.shadow {
-    background-color: var(--color-shadow);
-    color: #FFFFFF;
-}
-
-.color-block.inverseSurface {
-    background-color: var(--color-inverse-surface);
-    color: var(--color-inverse-on-surface);
-}
-
-.color-block.inverseOnSurface {
-    background-color: var(--color-inverse-on-surface);
-    color: var(--color-inverse-surface);
-}
-
-.color-block.inversePrimary {
-    background-color: var(--color-inverse-primary);
-    color: var(--color-inverse-surface);
-}
-
-.color-block.surfaceBright {
-    background-color: var(--color-surface-bright);
-    color: var(--color-on-surface);
-}
-
-.color-block.surfaceDim {
-    background-color: var(--color-surface-dim);
-    color: var(--color-on-surface);
-}
-
-.color-block.surfaceContainer {
-    background-color: var(--color-surface-container);
-    color: var(--color-on-surface);
-}
-
-.color-block.surfaceContainerLowest {
-    background-color: var(--color-surface-container-lowest);
-    color: var(--color-on-surface);
-}
-
-.color-block.surfaceContainerLow {
-    background-color: var(--color-surface-container-low);
-    color: var(--color-on-surface);
-}
-
-.color-block.surfaceContainerHigh {
-    background-color: var(--color-surface-container-high);
-    color: var(--color-on-surface);
-}
-
-.color-block.surfaceContainerHighest {
-    background-color: var(--color-surface-container-highest);
-    color: var(--color-on-surface);
-}
-
-.inset-demo {
-    position: fixed;
-    width: 100%;
-    background-color: var(--color-tertiary-container);
-    color: var(--color-on-tertiary-container);
-    z-index: 1;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.inset-demo.top {
-    top: 0;
-    height: var(--inset-top);
-}
-
-.inset-demo.bottom {
-    bottom: 0;
-    height: var(--inset-bottom);
-}
-
-.corner {
-    text-align: center;
-    font-size: 0.5em;
-}
-
-.inset-demo.bottom .corner {
-    margin-top: auto;
 }
 
 .ripple-element {
@@ -429,10 +239,6 @@ body {
     color: var(--color-error);
 }
 
-.hide {
-    display: none;
-}
-
 .upload-container {
     width: 100%;
     display: flex;
@@ -472,4 +278,143 @@ body {
 .progress-status {
     font-size: 0.8em;
     color: var(--color-on-surface-variant);
+}
+
+.page-content {
+    align-items: stretch;
+    gap: 16px;
+    padding-top: 8px;
+}
+
+.hero-block,
+.demo-section,
+.code-section,
+.catalog-list {
+    width: 100%;
+}
+
+.page-title {
+    margin: 0;
+    font-size: 1.5rem;
+    user-select: none;
+}
+
+.demo-description {
+    margin: 0;
+    color: var(--color-on-surface-variant);
+}
+
+.list-title {
+    padding: 0 16px;
+    font-size: 0.8em;
+    margin-bottom: 8px;
+    margin-top: 0;
+    color: var(--color-primary);
+    user-select: none;
+}
+
+.catalog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-radius: 20px;
+    overflow: clip;
+    margin-bottom: 16px;
+}
+
+.catalog-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.catalog-link {
+    display: block;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: var(--color-surface-bright);
+    transition: border-radius 0.3s ease;
+}
+
+.catalog-link:active {
+    border-radius: 20px;
+}
+
+.demo-card,
+.code-card {
+    background-color: var(--color-surface-bright);
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feature-card-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.feature-card-code {
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.feature-card-actions .btn {
+    flex: 1 1 180px;
+}
+
+.code-demo {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: clip;
+    background-color: var(--color-surface-dim);
+}
+
+.code-demo-markdown pre {
+    margin: 0;
+}
+
+.code-demo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 8px;
+    font-size: 0.75em;
+    color: var(--color-outline);
+}
+
+.code-demo-title {
+    margin-inline-start: 4px;
+    user-select: none;
+}
+
+.code-demo-heading-group {
+    min-width: 0;
+}
+
+.copy-code-button {
+    font-size: inherit;
+    border: none;
+    border-radius: 50px;
+    padding: 4px 8px;
+    background-color: transparent;
+    color: inherit;
+    flex-shrink: 0;
+}
+
+.hljs {
+    background-color: var(--color-surface-container);
+    color: var(--color-on-surface);
 }

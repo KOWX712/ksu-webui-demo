@@ -1,121 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>KSU WebUI demo</title>
-        <link rel="stylesheet" href="styles.css" type="text/css">
-        <script type="module" crossorigin src="index.js"></script>
-    </head>
-    <body>
-        <div class="header">
-            <div class="header-content">KSU WebUI demo</div>
-        </div>
-        <!-- Inset demo -->
-        <div class="inset-demo top hide">
-            <div class="corner">I'm top inset</div>
-            <div class="corner">I'm top inset</div>
-            <div class="corner">I'm top inset</div>
-        </div>
-        <div class="inset-demo bottom hide">
-            <div class="corner">I'm bottom inset</div>
-            <div class="corner">I'm bottom inset</div>
-            <div class="corner">I'm bottom inset</div>
-        </div>
-        <!-- body content -->
-        <div class="content">
-            <div class="content-container">
-                <!-- exec and spawn demo -->
-                 <div class="title">exec, spawn</div>
-                <div class="button-container">
-                    <button class="btn ripple-element" onclick="checkMagisk()">Magisk</button>
-                    <button class="btn ripple-element" onclick="checkApatch()">APatch</button>
-                    <button class="btn ripple-element" onclick="checkKernelSU()">KernelSU</button>
-                </div>
-                <!-- open link in external browser demo -->
-                 <div class="title">link redirect</div>
-                <div class="button-container">
-                    <button class="btn ripple-element" onclick="linkRedirect('https://github.com/KOWX712/ksu-webui-demo')">Open GitHub</button>
-                </div>
-                <!-- Dialog demo -->
-                <div class="title">Dialog</div>
-                <div class="button-container">
-                    <button class="btn ripple-element" onclick="window.alert('Alert dialog demo')">Alert</button>
-                    <button class="btn ripple-element" onclick="window.confirm('Confirm dialog demo')">Confirm</button>
-                    <button class="btn ripple-element" onclick="window.prompt('Prompt dialog demo')">Prompt</button>
-                </div>
-                <!-- File upload demo (supported since KernelSU 32265, APatch 11178)-->
-                <div class="title">File upload</div>
-                <div class="upload-container">
-                    <button class="btn ripple-element" onclick="document.getElementById('fileUpload').click()">Select File</button>
-                    <input type="file" id="fileUpload" class="hide">
-                    <!-- Type demo -->
-                    <!-- accepted suffixes -->
-                    <!-- <input type="file" multiple accept=".jpg,.png,"> -->
-                    <!-- accepted mime types -->
-                    <!-- <input type="file" accept="image/*"> -->
-                    <div id="uploadProgress" class="progress-container hide">
-                        <div class="progress-bar">
-                            <div class="progress-fill"></div>
-                        </div>
-                        <div class="progress-status">
-                            <span id="fileInfo">No file selected</span>
-                            <span id="progressText">0%</span>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSU WebUI demo</title>
+    <link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">KSU WebUI demo</div>
+    </header>
+    <main class="content page-shell">
+        <div class="content-container page-content">
+            <div class="catalog">
+                <section class="hero-block">
+                    <h1 class="list-title">Catalog</h1>
+                </section>
+
+                <nav class="catalog-list" aria-label="Feature demos">
+                    <a class="catalog-link ripple-element" href="pages/dialog.html">Dialog — alert, confirm, prompt</a>
+                    <a class="catalog-link ripple-element" href="pages/exec.html">Exec & Spawn</a>
+                    <a class="catalog-link ripple-element" href="pages/file.html">File upload</a>
+                    <a class="catalog-link ripple-element" href="pages/insets.html">Insets & Monet colors</a>
+                    <a class="catalog-link ripple-element" href="pages/pm.html">Package Manager API</a>
+                </nav>
+
+                <section id="catalogPrerequisiteCode" class="demo-card feature-card"
+                    aria-labelledby="catalogPrerequisiteTitle">
+                    <div class="feature-card-demo">
+                        <h2 id="catalogPrerequisiteTitle" class="page-title">Pre-requisite</h2>
+                    </div>
+                    <div class="feature-card-code">
+                        <div class="code-demo">
+                            <div class="code-demo-header">
+                                <div class="code-demo-title">bash</div>
+                                <button type="button" class="copy-code-button ripple-element">copy</button>
+                            </div>
+                            <div class="code-demo-markdown"></div>
                         </div>
                     </div>
-                </div>
-                <!-- Insets demo -->
-                <div class="title">Inset</div>
-                <div class="button-container">
-                    <button class="btn ripple-element" onclick="toggleInsetHint()">Inset hint</button>
-                    <button class="btn ripple-element" onclick="toggleInset()">Inset toggle</button>
-                </div>
-                <!-- Monet color demo -->
-                <div class="title">Monet Colors</div>
-                <div class="monet-color-container">
-                    <div class="color-block primary">Primary</div>
-                    <div class="color-block onPrimary">On Primary</div>
-                    <div class="color-block primaryContainer">Primary Container</div>
-                    <div class="color-block onPrimaryContainer">On Primary Container</div>
-                    <div class="color-block secondary">Secondary</div>
-                    <div class="color-block onSecondary">On Secondary</div>
-                    <div class="color-block secondaryContainer">Secondary Container</div>
-                    <div class="color-block onSecondaryContainer">On Secondary Container</div>
-                    <div class="color-block tertiary">Tertiary</div>
-                    <div class="color-block onTertiary">On Tertiary</div>
-                    <div class="color-block tertiaryContainer">Tertiary Container</div>
-                    <div class="color-block onTertiaryContainer">On Tertiary Container</div>
-                    <div class="color-block error">Error</div>
-                    <div class="color-block onError">On Error</div>
-                    <div class="color-block errorContainer">Error Container</div>
-                    <div class="color-block onErrorContainer">On Error Container</div>
-                    <div class="color-block background">Background</div>
-                    <div class="color-block onBackground">On Background</div>
-                    <div class="color-block surface">Surface</div>
-                    <div class="color-block onSurface">On Surface</div>
-                    <div class="color-block surfaceVariant">Surface Variant</div>
-                    <div class="color-block onSurfaceVariant">On Surface Variant</div>
-                    <div class="color-block outline">Outline</div>
-                    <div class="color-block outlineVariant">Outline Variant</div>
-                    <div class="color-block inverseSurface">Inverse Surface</div>
-                    <div class="color-block inverseOnSurface">Inverse On Surface</div>
-                    <div class="color-block inversePrimary">Inverse Primary</div>
-                    <div class="color-block surfaceBright">Surface Bright</div>
-                    <div class="color-block surfaceDim">Surface Dim</div>
-                    <div class="color-block surfaceContainer">Surface Container</div>
-                    <div class="color-block surfaceContainerLowest">Surface Container Lowest</div>
-                    <div class="color-block surfaceContainerLow">Surface Container Low</div>
-                    <div class="color-block surfaceContainerHigh">Surface Container High</div>
-                    <div class="color-block surfaceContainerHighest">Surface Container Highest</div>
-                    <div class="color-block shadow">Shadow</div>
-                </div>
-                <!-- package manager api demo -->
-                <div class="title">Package Manager API</div>
-                <div class="pm-container">
-                    <div class="loading">Loading packages...</div>
-                </div>
+                </section>
             </div>
         </div>
-        <div class="footer-placeholder"></div>
-    </body>
+    </main>
+    <div class="footer-placeholder"></div>
+    <script src="assets/highlight.min.js"></script>
+    <script src="assets/marked.umd.js"></script>
+    <script src="assets/marked-highlight.umd.js"></script>
+    <script type="module" src="index.js"></script>
+</body>
+
 </html>

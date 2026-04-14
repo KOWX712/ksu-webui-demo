@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Manager API</title>
+    <link rel="stylesheet" href="../styles.css" type="text/css">
+</head>
+
+<body>
+    <header class="header">
+        <a class="back-btn ripple-element" href="javascript:history.back()" aria-label="Go back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg>
+        </a>
+        <div class="header-content">Package Manager API</div>
+    </header>
+    <main class="content page-shell">
+        <div class="content-container page-content">
+            <section class="demo-section demo-card feature-card">
+                <div class="feature-card-demo">
+                    <h1 class="page-title">listPackages</h1>
+                    <p class="demo-description">Lists installed packages.</p>
+                </div>
+                <div id="listPackagesCode" class="feature-card-code">
+                    <div class="code-demo">
+                        <div class="code-demo-header">
+                            <div class="code-demo-title">js</div>
+                            <button type="button" class="copy-code-button ripple-element">copy</button>
+                        </div>
+                        <div class="code-demo-markdown"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="demo-section demo-card feature-card">
+                <div class="feature-card-demo">
+                    <h1 class="page-title">getPackagesInfo</h1>
+                    <p class="demo-description">Retrieves detailed information for one or more packages.</p>
+                </div>
+                <div id="getPackagesInfoCode" class="feature-card-code">
+                    <div class="code-demo">
+                        <div class="code-demo-header">
+                            <div class="code-demo-title">js</div>
+                            <button type="button" class="copy-code-button ripple-element">copy</button>
+                        </div>
+                        <div class="code-demo-markdown"></div>
+                    </div>
+                </div>
+
+                <!-- Icon -->
+                <p class="demo-description">When getPackagesInfo is available, you can use ksu://icon/{packageName} to get app icon:</p>
+                <div id="iconJsCode" class="feature-card-code">
+                    <div class="code-demo">
+                        <div class="code-demo-header">
+                            <div class="code-demo-title">js</div>
+                            <button type="button" class="copy-code-button ripple-element">copy</button>
+                        </div>
+                        <div class="code-demo-markdown"></div>
+                    </div>
+                </div>
+                <p class="demo-description">or</p>
+                <div id="iconHtmlCode" class="feature-card-code">
+                    <div class="code-demo">
+                        <div class="code-demo-header">
+                            <div class="code-demo-title">html</div>
+                            <button type="button" class="copy-code-button ripple-element">copy</button>
+                        </div>
+                        <div class="code-demo-markdown"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="demo-section demo-card feature-card">
+                <div class="feature-card-demo">
+                    <h1 class="page-title">Demo</h1>
+                    <p class="demo-description">List installed packages and render app info with icons.</p>
+                    <div class="pm-container">
+                        <div class="loading">Loading packages...</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <div class="footer-placeholder"></div>
+    <script src="../assets/highlight.min.js"></script>
+    <script src="../assets/marked.umd.js"></script>
+    <script src="../assets/marked-highlight.umd.js"></script>
+    <script type="module" src="../js/pm.js"></script>
+</body>
+
+</html>

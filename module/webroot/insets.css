@@ -1,0 +1,221 @@
+.monet-color-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.color-block {
+    height: 48px;
+    font-size: 0.8em;
+    border-radius: 8px;
+    display: flex;
+    align-items: end;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.color-block.primary {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+.color-block.onPrimary {
+    background-color: var(--color-on-primary);
+    color: var(--color-primary);
+}
+
+.color-block.primaryContainer {
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+}
+
+.color-block.onPrimaryContainer {
+    background-color: var(--color-on-primary-container);
+    color: var(--color-primary-container);
+}
+
+.color-block.secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-on-secondary);
+}
+
+.color-block.onSecondary {
+    background-color: var(--color-on-secondary);
+    color: var(--color-secondary);
+}
+
+.color-block.secondaryContainer {
+    background-color: var(--color-secondary-container);
+    color: var(--color-on-secondary-container);
+}
+
+.color-block.onSecondaryContainer {
+    background-color: var(--color-on-secondary-container);
+    color: var(--color-secondary-container);
+}
+
+.color-block.tertiary {
+    background-color: var(--color-tertiary);
+    color: var(--color-on-tertiary);
+}
+
+.color-block.onTertiary {
+    background-color: var(--color-on-tertiary);
+    color: var(--color-tertiary);
+}
+
+.color-block.tertiaryContainer {
+    background-color: var(--color-tertiary-container);
+    color: var(--color-on-tertiary-container);
+}
+
+.color-block.onTertiaryContainer {
+    background-color: var(--color-on-tertiary-container);
+    color: var(--color-tertiary-container);
+}
+
+.color-block.error {
+    background-color: var(--color-error);
+    color: var(--color-on-error);
+}
+
+.color-block.onError {
+    background-color: var(--color-on-error);
+    color: var(--color-error);
+}
+
+.color-block.errorContainer {
+    background-color: var(--color-error-container);
+    color: var(--color-on-error-container);
+}
+
+.color-block.onErrorContainer {
+    background-color: var(--color-on-error-container);
+    color: var(--color-error-container);
+}
+
+.color-block.background {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+}
+
+.color-block.onBackground {
+    background-color: var(--color-on-background);
+    color: var(--color-background);
+}
+
+.color-block.surface {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+}
+
+.color-block.onSurface {
+    background-color: var(--color-on-surface);
+    color: var(--color-surface);
+}
+
+.color-block.surfaceVariant {
+    background-color: var(--color-surface-variant);
+    color: var(--color-on-surface-variant);
+}
+
+.color-block.onSurfaceVariant {
+    background-color: var(--color-on-surface-variant);
+    color: var(--color-surface-variant);
+}
+
+.color-block.outline {
+    background-color: var(--color-outline);
+    color: var(--color-on-surface);
+}
+
+.color-block.outlineVariant {
+    background-color: var(--color-outline-variant);
+    color: var(--color-on-surface);
+}
+
+.color-block.shadow {
+    background-color: var(--color-shadow);
+    color: #FFFFFF;
+}
+
+.color-block.inverseSurface {
+    background-color: var(--color-inverse-surface);
+    color: var(--color-inverse-on-surface);
+}
+
+.color-block.inverseOnSurface {
+    background-color: var(--color-inverse-on-surface);
+    color: var(--color-inverse-surface);
+}
+
+.color-block.inversePrimary {
+    background-color: var(--color-inverse-primary);
+    color: var(--color-inverse-surface);
+}
+
+.color-block.surfaceBright {
+    background-color: var(--color-surface-bright);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceDim {
+    background-color: var(--color-surface-dim);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainer {
+    background-color: var(--color-surface-container);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainerLowest {
+    background-color: var(--color-surface-container-lowest);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainerLow {
+    background-color: var(--color-surface-container-low);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainerHigh {
+    background-color: var(--color-surface-container-high);
+    color: var(--color-on-surface);
+}
+
+.color-block.surfaceContainerHighest {
+    background-color: var(--color-surface-container-highest);
+    color: var(--color-on-surface);
+}
+
+.inset-demo {
+    position: fixed;
+    width: 100%;
+    background-color: var(--color-tertiary-container);
+    color: var(--color-on-tertiary-container);
+    z-index: 1;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.inset-demo.top {
+    top: 0;
+    height: var(--inset-top);
+}
+
+.inset-demo.bottom {
+    bottom: 0;
+    height: var(--inset-bottom);
+}
+
+.corner {
+    text-align: center;
+    font-size: 0.5em;
+}
+
+.inset-demo.bottom .corner {
+    margin-top: auto;
+}

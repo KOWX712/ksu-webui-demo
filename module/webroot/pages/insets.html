@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insets & Monet</title>
+    <link rel="stylesheet" href="../styles.css" type="text/css">
+    <link rel="stylesheet" href="../insets.css" type="text/css">
+</head>
+
+<body>
+    <header class="header">
+        <a class="back-btn ripple-element" href="javascript:history.back()" aria-label="Go back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg>
+        </a>
+        <div class="header-content">Insets & Monet</div>
+    </header>
+    <div class="inset-demo top hide">
+        <div class="corner">I'm top inset</div>
+        <div class="corner">I'm top inset</div>
+        <div class="corner">I'm top inset</div>
+    </div>
+    <div class="inset-demo bottom hide">
+        <div class="corner">I'm bottom inset</div>
+        <div class="corner">I'm bottom inset</div>
+        <div class="corner">I'm bottom inset</div>
+    </div>
+    <main class="content page-shell">
+        <div class="content-container page-content">
+            <section class="demo-section demo-card feature-card">
+                <div class="feature-card-demo">
+                    <h1 class="page-title">Full Screen</h1>
+                    <p class="demo-description">Request webview to enter full screen, hide system bars.</p>
+                    <div class="feature-card-actions">
+                        <button type="button" id="toggleFullScreenButton" class="btn ripple-element">Full Screen Toggle</button>
+                    </div>
+                </div>
+                <div id="fullScreenCode" class="feature-card-code">
+                    <div class="code-demo">
+                        <div class="code-demo-header">
+                            <div class="code-demo-title">js</div>
+                            <button type="button" class="copy-code-button ripple-element">copy</button>
+                        </div>
+                        <div class="code-demo-markdown"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="demo-section demo-card feature-card">
+                <div class="feature-card-demo">
+                    <h1 class="page-title">Insets</h1>
+                    <p class="demo-description">Toggle edge-to-edge support.</p>
+                    <div class="feature-card-actions">
+                        <button type="button" id="toggleInsetHintButton" class="btn ripple-element">Inset Hint</button>
+                        <button type="button" id="toggleInsetButton" class="btn ripple-element">Inset Toggle</button>
+                    </div>
+                </div>
+                <p class="demo-description">To enable insets, you need to incude this in your css:</p>
+                <div id="insetsImport" class="feature-card-code">
+                    <div class="code-demo">
+                        <div class="code-demo-header">
+                            <div class="code-demo-title">css</div>
+                            <button type="button" class="copy-code-button ripple-element">copy</button>
+                        </div>
+                        <div class="code-demo-markdown"></div>
+                    </div>
+                </div>
+                <p class="demo-description">Example data from imported insets.css</p>
+                <div id="insetsCode" class="feature-card-code">
+                    <div class="code-demo">
+                        <div class="code-demo-header">
+                            <div class="code-demo-title">css</div>
+                            <button type="button" class="copy-code-button ripple-element">copy</button>
+                        </div>
+                        <div class="code-demo-markdown"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="demo-section demo-card feature-card">
+                <div class="feature-card-demo">
+                    <h1 class="page-title">Monet colors</h1>
+                    <p class="demo-description">Preview the active Monet palette exposed through the theme CSS
+                        variables.</p>
+                    <div class="monet-color-container">
+                        <div class="color-block primary">Primary</div>
+                        <div class="color-block onPrimary">On Primary</div>
+                        <div class="color-block primaryContainer">Primary Container</div>
+                        <div class="color-block onPrimaryContainer">On Primary Container</div>
+                        <div class="color-block secondary">Secondary</div>
+                        <div class="color-block onSecondary">On Secondary</div>
+                        <div class="color-block secondaryContainer">Secondary Container</div>
+                        <div class="color-block onSecondaryContainer">On Secondary Container</div>
+                        <div class="color-block tertiary">Tertiary</div>
+                        <div class="color-block onTertiary">On Tertiary</div>
+                        <div class="color-block tertiaryContainer">Tertiary Container</div>
+                        <div class="color-block onTertiaryContainer">On Tertiary Container</div>
+                        <div class="color-block error">Error</div>
+                        <div class="color-block onError">On Error</div>
+                        <div class="color-block errorContainer">Error Container</div>
+                        <div class="color-block onErrorContainer">On Error Container</div>
+                        <div class="color-block background">Background</div>
+                        <div class="color-block onBackground">On Background</div>
+                        <div class="color-block surface">Surface</div>
+                        <div class="color-block onSurface">On Surface</div>
+                        <div class="color-block surfaceVariant">Surface Variant</div>
+                        <div class="color-block onSurfaceVariant">On Surface Variant</div>
+                        <div class="color-block outline">Outline</div>
+                        <div class="color-block outlineVariant">Outline Variant</div>
+                        <div class="color-block inverseSurface">Inverse Surface</div>
+                        <div class="color-block inverseOnSurface">Inverse On Surface</div>
+                        <div class="color-block inversePrimary">Inverse Primary</div>
+                        <div class="color-block surfaceBright">Surface Bright</div>
+                        <div class="color-block surfaceDim">Surface Dim</div>
+                        <div class="color-block surfaceContainer">Surface Container</div>
+                        <div class="color-block surfaceContainerLowest">Surface Container Lowest</div>
+                        <div class="color-block surfaceContainerLow">Surface Container Low</div>
+                        <div class="color-block surfaceContainerHigh">Surface Container High</div>
+                        <div class="color-block surfaceContainerHighest">Surface Container Highest</div>
+                        <div class="color-block shadow">Shadow</div>
+                    </div>
+                </div>
+                <p class="demo-description">To use monet color, you need to incude this in your css:</p>
+                <div id="monetImport" class="feature-card-code">
+                    <div class="code-demo">
+                        <div class="code-demo-header">
+                            <div class="code-demo-title">css</div>
+                            <button type="button" class="copy-code-button ripple-element">copy</button>
+                        </div>
+                        <div class="code-demo-markdown"></div>
+                    </div>
+                </div>
+                <p class="demo-description">Example data from imported colors.css</p>
+                <div id="monetCode" class="feature-card-code">
+                    <div class="code-demo">
+                        <div class="code-demo-header">
+                            <div class="code-demo-title">css</div>
+                            <button type="button" class="copy-code-button ripple-element">copy</button>
+                        </div>
+                        <div class="code-demo-markdown"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <div class="footer-placeholder"></div>
+    <script src="../assets/highlight.min.js"></script>
+    <script src="../assets/marked.umd.js"></script>
+    <script src="../assets/marked-highlight.umd.js"></script>
+    <script type="module" src="../js/insets.js"></script>
+</body>
+
+</html>
