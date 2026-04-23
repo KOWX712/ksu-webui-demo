@@ -1,5 +1,5 @@
 import { getPackagesInfo, listPackages } from '../assets/kernelsu.js';
-import { codeFence, initPage, renderCode } from './utils.js';
+import { renderPage } from './utils.js';
 
 const listPackagesCode = `
 import { listPackages } from 'kernelsu';
@@ -25,7 +25,10 @@ const info = await getPackagesInfo('com.android.settings');
 console.log(info);
 
 // Get info for multiple packages
-const infos = await getPackagesInfo(['com.android.settings', 'com.android.shell']);
+const infos = await getPackagesInfo([
+    'com.android.settings',
+    'com.android.shell'
+]);
 console.log(infos);
 
 // PackagesInfo structure:
@@ -46,8 +49,36 @@ icon.src = "ksu://icon/com.android.settings";
 
 const iconHtmlCode = `<img src="ksu://icon/com.android.settings" />`;
 
-function setupIconLazyLoading() {
-    const images = document.querySelectorAll('.app-icon[data-src]');
+const cards = [
+    {
+        title: 'listPackages',
+        sections: [
+            { type: 'description', content: 'Lists installed packages.' },
+            { type: 'code', language: 'js', content: listPackagesCode.trim() },
+        ],
+    },
+    {
+        title: 'getPackagesInfo',
+        sections: [
+            { type: 'description', content: 'Retrieves detailed information for one or more packages.' },
+            { type: 'code', language: 'js', content: getPackagesInfoCode.trim() },
+            { type: 'description', content: 'When getPackagesInfo is available, you can use ksu://icon/{packageName} to get app icon:' },
+            { type: 'code', language: 'js', content: iconJsCode.trim() },
+            { type: 'description', content: 'Or in HTML:' },
+            { type: 'code', language: 'html', content: iconHtmlCode },
+        ],
+    },
+    {
+        title: 'Demo',
+        sections: [
+            { type: 'description', content: 'List installed packages and render app info with icons.' },
+            { type: 'interactive', content: await renderPackagesTable() },
+        ],
+    },
+];
+
+function setupIconLazyLoading(container) {
+    const images = container.querySelectorAll('.app-icon[data-src]');
     const observer = new IntersectionObserver((entries, currentObserver) => {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
@@ -109,8 +140,11 @@ function createPackageRow(pkg) {
     return row;
 }
 
-async function loadPackages() {
-    const container = document.querySelector('.pm-container');
+async function renderPackagesTable() {
+    const container = document.createElement('div');
+    container.className = 'pm-container';
+    container.innerHTML = '<div class="loading">Loading packages...</div>';
+
     try {
         const packages = await listPackages('all');
         const packageInfos = await getPackagesInfo(packages);
@@ -125,19 +159,14 @@ async function loadPackages() {
 
         container.innerHTML = '';
         container.appendChild(table);
-        setupIconLazyLoading();
+        setupIconLazyLoading(container);
     } catch (error) {
         console.error('Error loading packages:', error);
         container.innerHTML = '<div class="pm-error">Error loading packages</div>';
     }
+    return container;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initPage();
-    renderCode(document.getElementById('listPackagesCode'), codeFence(listPackagesCode.trim(), 'javascript'));
-    renderCode(document.getElementById('getPackagesInfoCode'), codeFence(getPackagesInfoCode.trim(), 'javascript'));
-    renderCode(document.getElementById('iconJsCode'), codeFence(iconJsCode.trim(), 'javascript'));
-    renderCode(document.getElementById('iconHtmlCode'), codeFence(iconHtmlCode.trim(), 'html'));
-    
-    loadPackages();
-});
+export function init() {
+    renderPage('Package Manager API', cards);
+}

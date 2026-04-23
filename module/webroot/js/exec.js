@@ -1,5 +1,5 @@
 import { exec, spawn, toast } from '../assets/kernelsu.js';
-import { codeFence, initPage, renderCode } from './utils.js';
+import { actionButton, renderPage } from './utils.js';
 
 const execCode = `
 import { exec, toast } from 'kernelsu';
@@ -46,6 +46,40 @@ await exec('am start -a android.intent.action.VIEW -d ' + link).then(({ errno })
 });
 `;
 
+const cards = [
+    {
+        title: 'Exec',
+        sections: [
+            { type: 'description', content: 'Run a command through shell, buffers all output and returns it in one callback. Simple but blocking and no streaming.' },
+            { type: 'interactive', content: actionButton([
+                { label: 'Magisk', action: checkMagisk },
+                { label: 'APatch', action: checkApatch },
+            ]) },
+            { type: 'code', language: 'js', content: execCode.trim() },
+        ],
+    },
+    {
+        title: 'Spawn',
+        sections: [
+            { type: 'description', content: 'Spawn process, returns streaming stdout/stderr via events. Suitable for large/unbounded output, long-running processes.' },
+            { type: 'interactive', content: actionButton([
+                { label: 'KernelSU', action: checkKernelSU },
+            ]) },
+            { type: 'code', language: 'js', content: spawnCode.trim() },
+        ],
+    },
+    {
+        title: 'Open external link',
+        sections: [
+            { type: 'description', content: 'Open link in the system browser via exec.' },
+            { type: 'interactive', content: actionButton([
+                { label: 'Open Link', action: openGithub },
+            ]) },
+            { type: 'code', language: 'js', content: linkCode.trim() },
+        ],
+    },
+];
+
 async function checkMagisk() {
     const { errno, stdout, stderr } = await exec('magisk -V', { env: { PATH: '/data/adb/magisk' } });
     if (errno === 0) {
@@ -81,13 +115,6 @@ function openGithub() {
     }, 100);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initPage();
-    renderCode(document.getElementById('execCode'), codeFence(execCode.trim(), 'js'));
-    renderCode(document.getElementById('spawnCode'), codeFence(spawnCode.trim(), 'js'));
-    renderCode(document.getElementById('linkCode'), codeFence(linkCode.trim(), 'js'));
-    document.getElementById('magiskButton').addEventListener('click', checkMagisk);
-    document.getElementById('apatchButton').addEventListener('click', checkApatch);
-    document.getElementById('kernelSUButton').addEventListener('click', checkKernelSU);
-    document.getElementById('githubButton').addEventListener('click', openGithub);
-});
+export function init() {
+    renderPage('Exec & Spawn', cards);
+}

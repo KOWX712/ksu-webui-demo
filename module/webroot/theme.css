@@ -15,7 +15,7 @@
     --color-secondary: var(--secondary, #625B71);
     --color-on-secondary: var(--onSecondary, #FFFFFF);
     --color-secondary-container: var(--secondaryContainer, #E8DEF8);
-    --color-on-secondary-container: var(--on-secondaryContainer, #4A4458);
+    --color-on-secondary-container: var(--onSecondaryContainer, #4A4458);
     --color-tertiary: var(--tertiary, #7D5260);
     --color-on-tertiary: var(--onTertiary, #FFFFFF);
     --color-tertiary-container: var(--tertiaryContainer, #FFD8E4);
@@ -34,7 +34,7 @@
     --color-outline-variant: var(--outlineVariant, #CAC4D0);
     --color-shadow: var(--shadow, #000000);
     --color-inverse-surface: var(--inverseSurface, #322F35);
-    --color-inverse-on-surface: var(--inverseOnSurface, #F5EFF7);
+    --color-on-inverse-surface: var(--inverseOnSurface, #F5EFF7);
     --color-inverse-primary: var(--inversePrimary, #D0BCFF);
     --color-surface-bright: var(--surfaceBright, #FEF7FF);
     --color-surface-dim: var(--surfaceDim, #DED8E1);
@@ -75,7 +75,7 @@
         --color-outline-variant: var(--outlineVariant, #49454F);
         --color-shadow: var(--shadow, #000000);
         --color-inverse-surface: var(--inverseSurface, #E6E0E9);
-        --color-inverse-on-surface: var(--inverseOnSurface, #322F35);
+        --color-on-inverse-surface: var(--inverseOnSurface, #322F35);
         --color-inverse-primary: var(--inversePrimary, #6750A4);
         --color-surface-bright: var(--surfaceBright, #3B383E);
         --color-surface-dim: var(--surfaceDim, #141218);

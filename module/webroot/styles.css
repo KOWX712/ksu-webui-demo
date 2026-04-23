@@ -132,6 +132,61 @@ a {
     }
 }
 
+.monet-color-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.color-block {
+    height: 48px;
+    font-size: 0.8em;
+    border-radius: 8px;
+    display: flex;
+    align-items: end;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.color-block.shadow {
+    color: #FFFFFF !important;
+}
+
+.color-block.outline {
+    color: var(--color-surface) !important;
+}
+
+.inset-demo {
+    position: fixed;
+    width: 100%;
+    background-color: var(--color-tertiary-container);
+    color: var(--color-on-tertiary-container);
+    z-index: 1;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.inset-demo.top {
+    top: 0;
+    height: var(--inset-top);
+}
+
+.inset-demo.bottom {
+    bottom: 0;
+    height: var(--inset-bottom);
+}
+
+.corner {
+    text-align: center;
+    font-size: 0.5em;
+}
+
+.inset-demo.bottom .corner {
+    margin-top: auto;
+}
+
 .pm-container {
     max-width: 100%;
     overflow: auto;

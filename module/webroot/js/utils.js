@@ -67,6 +67,72 @@ function renderCode(container, markdown) {
     applyRippleEffect();
 }
 
+function actionButton(buttons) {
+    const container = document.createElement('div');
+    container.className = 'feature-card-actions';
+
+    buttons.forEach(({ label, action }) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn ripple-element';
+        button.textContent = label;
+        button.onclick = action;
+        container.appendChild(button);
+    });
+
+    return container;
+}
+
+function createCard(data) {
+    const card = document.createElement('section');
+    card.className = 'demo-section demo-card feature-card';
+    const title = document.createElement('h1');
+    title.className = 'page-title';
+    title.textContent = data.title;
+    card.appendChild(title);
+
+    data.sections.forEach(section => {
+        if (section.type === 'description') {
+            const p = document.createElement('p');
+            p.className = 'demo-description';
+            p.textContent = section.content;
+            card.appendChild(p);
+        } else if (section.type === 'interactive') {
+            card.appendChild(section.content);
+        } else if (section.type === 'code') {
+            const code = document.createElement('div');
+            code.className = 'feature-card-code';
+            code.innerHTML = `
+                <div class="code-demo">
+                    <div class="code-demo-header">
+                        <div class="code-demo-title">${section.language}</div>
+                        <button type="button" class="copy-code-button ripple-element">copy</button>
+                    </div>
+                    <div class="code-demo-markdown"></div>
+                </div>
+            `;
+            renderCode(code, codeFence(section.content, section.language));
+            card.appendChild(code);
+        }
+    });
+
+    return card;
+}
+
+function renderPage(title, list) {
+    document.title = title;
+    document.querySelector('.header-content').textContent = title;
+
+    const content = document.querySelector('.content-container');
+    content.replaceChildren();
+    list.forEach((item) => {
+        const card = createCard(item);
+        content.appendChild(card);
+    });
+
+    initPage();
+}
+
 function checkWebuiX() {
     if (Object.keys(globalThis.$ksuwebui_demo ?? {}).length > 0) {
         $ksuwebui_demo.setLightStatusBars(!$ksuwebui_demo.isDarkMode());
@@ -150,4 +216,4 @@ function initPage() {
     };
 }
 
-export { applyRippleEffect, checkWebuiX, codeFence, initPage, renderCode };
+export { applyRippleEffect, checkWebuiX, codeFence, actionButton, renderPage, initPage, renderCode };

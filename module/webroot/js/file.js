@@ -1,10 +1,7 @@
 import { toast } from '../assets/kernelsu.js';
-import { codeFence, initPage, renderCode } from './utils.js';
+import { renderPage } from './utils.js';
 
 const demoCode = `
-// Or element in HTML
-// <input type="file" multiple accept=".jpg,.png,">
-
 const fileEl = document.createElement('input');
 fileEl.type = 'file';
 fileEl.multiple = true; // Set this to enable multiple file selection
@@ -19,7 +16,41 @@ fileEl.addEventListener('change', (event) => {
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
 });
+
+// Or element in HTML
+// <input type="file" multiple accept=".jpg,.png,">
 `;
+
+const uploadContainer = () => {
+    const container = document.createElement('div');
+    container.className = 'upload-container';
+    container.innerHTML = `
+        <button type="button" id="selectFileButton" class="btn ripple-element">Select File</button>
+        <input type="file" id="fileUpload" class="hide">
+        <div id="uploadProgress" class="progress-container hide">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-status">
+                <span id="fileInfo">No file selected</span>
+                <span id="progressText">0%</span>
+            </div>
+        </div>
+    `;
+
+    return container;
+}
+
+const cards = [
+    {
+        title: 'File upload',
+        sections: [
+            { type: 'description', content: 'Select a file and simulate chunked progress updates in the browser.' },
+            { type: 'interactive', content: uploadContainer() },
+            { type: 'code', language: 'js', content: demoCode.trim() },
+        ],
+    },
+]
 
 function setupFileUpload() {
     const trigger = document.getElementById('selectFileButton');
@@ -68,8 +99,7 @@ function setupFileUpload() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initPage();
-    renderCode(document.getElementById('fileCode'), codeFence(demoCode, 'js'));
+export function init() {
+    renderPage('File upload', cards);
     setupFileUpload();
-});
+}

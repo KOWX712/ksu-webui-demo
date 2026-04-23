@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Template</title>
+    <link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+
+<body>
+    <header class="header">
+        <a class="back-btn ripple-element" href="javascript:history.back()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg>
+        </a>
+        <div class="header-content"></div>
+    </header>
+    <div class="inset-demo top hide">
+        <div class="corner">I'm top inset</div>
+        <div class="corner">I'm top inset</div>
+        <div class="corner">I'm top inset</div>
+    </div>
+    <div class="inset-demo bottom hide">
+        <div class="corner">I'm bottom inset</div>
+        <div class="corner">I'm bottom inset</div>
+        <div class="corner">I'm bottom inset</div>
+    </div>
+    <main class="content page-shell">
+        <div class="content-container page-content"></div>
+    </main>
+    <div class="footer-placeholder"></div>
+    <script src="assets/highlight.min.js"></script>
+    <script src="assets/marked.umd.js"></script>
+    <script src="assets/marked-highlight.umd.js"></script>
+    <script type="module">
+        const pageModules = {
+            dialog: () => import('./js/dialog.js'),
+            exec: () => import('./js/exec.js'),
+            file: () => import('./js/file.js'),
+            insets: () => import('./js/insets.js'),
+            pm: () => import('./js/pm.js'),
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const pageName = params.get('page');
+        const loadPage = pageModules[pageName];
+
+        if (loadPage) {
+            const module = await loadPage();
+            await module.init?.();
+        }
+    </script>
+</body>
+
+</html>
