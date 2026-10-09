@@ -303,6 +303,44 @@ a {
     box-sizing: border-box;
 }
 
+.download-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.download-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--color-on-surface-variant);
+    font-size: 0.85em;
+}
+
+.download-field input {
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid var(--color-outline);
+    border-radius: 4px;
+    background-color: var(--color-surface-container);
+    color: var(--color-on-surface);
+    font: inherit;
+}
+
+.upload-container .btn,
+.download-container .btn {
+    align-self: stretch;
+    width: 100%;
+}
+
+.download-status {
+    color: var(--color-on-surface-variant);
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+}
+
 .progress-container {
     width: 100%;
     display: flex;
@@ -427,6 +465,70 @@ a {
 
 .feature-card-actions .btn {
     flex: 1 1 180px;
+}
+
+.file-api-demo,
+.file-api-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.file-api-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--color-on-surface-variant);
+    font-size: 0.85em;
+}
+
+.file-api-field input {
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid var(--color-outline);
+    border-radius: 4px;
+    background-color: var(--color-surface-container);
+    color: var(--color-on-surface);
+    font: inherit;
+}
+
+.file-api-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-on-surface-variant);
+    font-size: 0.85em;
+}
+
+.file-api-checkbox input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--color-primary);
+}
+
+.file-api-demo .btn {
+    align-self: stretch;
+    width: 100%;
+}
+
+.file-api-demo .btn:disabled {
+    opacity: 0.6;
+}
+
+.file-api-output {
+    min-height: 72px;
+    max-height: 280px;
+    margin: 0;
+    padding: 12px;
+    overflow-x: auto;
+    overflow-y: auto;
+    white-space: pre;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: var(--color-surface-container);
+    color: var(--color-on-surface);
 }
 
 .code-demo {
