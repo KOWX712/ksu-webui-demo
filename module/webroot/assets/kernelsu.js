@@ -164,6 +164,7 @@ function toast(message) {
 /**
  * Added since KernelSU v2.1.2
  * List installed packages
+ * @deprecated Use {@link pm.listPackages} instead (requires ksu.pm).
  * @param {string} [type="all"] - The type of packages to list: "user", "system", or "all".
  * @returns {Promise<string[]>} A promise that resolves to an array of package names.
  */
@@ -222,6 +223,7 @@ async function listPackages(type) {
 /**
  * Added since KernelSU v2.1.2
  * Retrieves detailed information for one or more packages.
+ * @deprecated Use {@link pm.getPackagesInfo} instead (requires ksu.pm).
  * @param {string|string[]} pkg - A single package name or an array of package names.
  * @returns {Promise<PackagesInfo|PackagesInfo[]>} Resolves with:
  *   - a single package information object if one package is provided
@@ -259,6 +261,38 @@ function getPackagesInfo(pkg) {
     });
 }
 
+/**
+ * Package manager APIs added by KernelSU's modern WebUI Package Manager API.
+ * Synchronous, unlike the deprecated top-level listPackages/getPackagesInfo.
+ */
+const pmSupported = typeof globalThis.ksu?.pm === 'function';
+
+const pm = {
+    support: pmSupported,
+    version: pmSupported ? globalThis.ksu.pm().version() : 0,
+
+    listPackages(type) {
+        try {
+            return JSON.parse(globalThis.ksu.pm().listPackages(type) || '[]');
+        } catch {
+            return [];
+        }
+    },
+
+    /**
+     * @param {string[]} packages - Array of package names.
+     * @returns {Array<PackagesInfo & {userId: number|null} | {packageName: string, error: string}>}
+     *   Package entries (with userId, nullable isSystem/uid) or per-package error entries.
+     */
+    getPackagesInfo(packages) {
+        try {
+            const payload = typeof packages === 'string' ? packages : JSON.stringify(packages);
+            return JSON.parse(globalThis.ksu.pm().getPackagesInfo(payload) || '[]');
+        } catch {
+            return [];
+        }
+    },
+};
 
 /**
  * Root-backed file system APIs added by KernelSU's modern WebUI File API.
@@ -381,4 +415,4 @@ const io = {
     },
 };
 
-export { exec, spawn, fullScreen, enableEdgeToEdge, toast, listPackages, getPackagesInfo, io };
+export { exec, spawn, fullScreen, enableEdgeToEdge, toast, listPackages, getPackagesInfo, io, pm };
