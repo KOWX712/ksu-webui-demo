@@ -1,7 +1,67 @@
-import { getPackagesInfo, listPackages } from '../assets/kernelsu.js';
-import { renderPage } from './utils.js';
+import { pm, getPackagesInfo, listPackages, toast } from '../assets/kernelsu.js';
+import { actionButton, renderPage } from './utils.js';
+
+// Prefer the new pm namespace; fall back to the deprecated top-level exports
+// on KernelSU versions without ksu.pm.
+const packageApi = pm.support ? pm : { listPackages, getPackagesInfo };
+
+const pmSupportCode = `
+import { pm, toast } from 'kernelsu';
+
+// Check whether the Package Manager API is available before using it
+if (pm.support) {
+    toast('supported');
+} else {
+    toast('unavailable');
+}
+`;
 
 const listPackagesCode = `
+import { pm } from 'kernelsu';
+
+// Get all packages
+const allPackages = pm.listPackages();
+console.log(allPackages);
+
+// Get only user installed packages
+const userPackages = pm.listPackages('user');
+console.log(userPackages);
+
+// Get only system packages
+const systemPackages = pm.listPackages('system');
+console.log(systemPackages);
+`;
+
+const getPackagesInfoCode = `
+import { pm } from 'kernelsu';
+
+// Get info for one or more packages (always an array of package names)
+const infos = pm.getPackagesInfo([
+    'com.android.settings',
+    'com.android.shell'
+]);
+console.log(infos);
+
+// PackagesInfo entry structure (pm.getPackagesInfo returns
+// Array<PackagesInfoPerUid | PackageInfoError>):
+// {
+//   packageName: string,
+//   versionName: string,
+//   versionCode: number,
+//   appLabel: string,
+//   isSystem: boolean | null,
+//   uid: number | null,
+//   userId: number | null
+// }
+//
+// Failed lookups are reported per package instead of throwing:
+// {
+//   packageName: string,
+//   error: string
+// }
+`;
+
+const legacyListPackagesCode = `
 import { listPackages } from 'kernelsu';
 
 // Get all packages
@@ -17,7 +77,7 @@ const systemPackages = await listPackages('system');
 console.log(systemPackages);
 `;
 
-const getPackagesInfoCode = `
+const legacyGetPackagesInfoCode = `
 import { getPackagesInfo } from 'kernelsu';
 
 // Get info for a single package
@@ -30,16 +90,6 @@ const infos = await getPackagesInfo([
     'com.android.shell'
 ]);
 console.log(infos);
-
-// PackagesInfo structure:
-// {
-//   packageName: string,
-//   versionName: string,
-//   versionCode: number,
-//   appLabel: string,
-//   isSystem: boolean,
-//   uid: number
-// }
 `;
 
 const iconJsCode = `
@@ -51,16 +101,26 @@ const iconHtmlCode = `<img src="ksu://icon/com.android.settings" />`;
 
 const cards = [
     {
-        title: 'listPackages',
+        title: 'pm.support',
         sections: [
-            { type: 'description', content: 'Lists installed packages.' },
+            { type: 'description', content: 'pm.support reports whether ksu.pm is exposed by KernelSU. Check it before using the pm interface.' },
+            { type: 'interactive', content: actionButton([
+                { label: 'Check support', action: () => toast(pm.support ? 'supported' : 'unavailable') },
+            ]) },
+            { type: 'code', language: 'js', content: pmSupportCode.trim() },
+        ],
+    },
+    {
+        title: 'pm.listPackages',
+        sections: [
+            { type: 'description', content: 'Lists installed packages through the new synchronous pm interface (requires pm.support).' },
             { type: 'code', language: 'js', content: listPackagesCode.trim() },
         ],
     },
     {
-        title: 'getPackagesInfo',
+        title: 'pm.getPackagesInfo',
         sections: [
-            { type: 'description', content: 'Retrieves detailed information for one or more packages.' },
+            { type: 'description', content: 'Retrieves detailed information for one or more packages. Returns Array<PackagesInfoPerUid | PackageInfoError>: each entry carries userId, nullable isSystem/uid, and unresolvable packages come back as { packageName, error }.' },
             { type: 'code', language: 'js', content: getPackagesInfoCode.trim() },
             { type: 'description', content: 'When getPackagesInfo is available, you can use ksu://icon/{packageName} to get app icon:' },
             { type: 'code', language: 'js', content: iconJsCode.trim() },
@@ -69,9 +129,17 @@ const cards = [
         ],
     },
     {
+        title: 'listPackages / getPackagesInfo (deprecated)',
+        sections: [
+            { type: 'description', content: 'The top-level async exports are deprecated in favor of pm.listPackages / pm.getPackagesInfo. They remain as a fallback for KernelSU versions without ksu.pm.' },
+            { type: 'code', language: 'js', content: legacyListPackagesCode.trim() },
+            { type: 'code', language: 'js', content: legacyGetPackagesInfoCode.trim() },
+        ],
+    },
+    {
         title: 'Demo',
         sections: [
-            { type: 'description', content: 'List installed packages and render app info with icons.' },
+            { type: 'description', content: demoDescription() },
             { type: 'interactive', content: await renderPackagesTable() },
         ],
     },
@@ -96,41 +164,54 @@ function setupIconLazyLoading(container) {
 }
 
 function createPackageRow(pkg) {
+    const isError = typeof pkg.error === 'string';
     const row = document.createElement('tr');
 
     const iconCell = document.createElement('td');
-    const img = document.createElement('img');
-    img.className = 'app-icon';
-    img.dataset.src = `ksu://icon/${pkg.packageName}`;
-    img.loading = 'lazy';
-    iconCell.appendChild(img);
+    if (!isError) {
+        const img = document.createElement('img');
+        img.className = 'app-icon';
+        img.dataset.src = `ksu://icon/${pkg.packageName}`;
+        img.loading = 'lazy';
+        iconCell.appendChild(img);
+    }
 
     const infoCell = document.createElement('td');
     infoCell.className = 'app-info';
 
     const label = document.createElement('div');
     label.className = 'app-label';
-    label.textContent = pkg.appLabel;
+    label.textContent = isError ? pkg.packageName : (pkg.appLabel || pkg.packageName);
+    infoCell.appendChild(label);
 
-    const packageName = document.createElement('div');
-    packageName.className = 'package-name';
-    packageName.textContent = pkg.packageName;
+    if (!isError) {
+        const packageName = document.createElement('div');
+        packageName.className = 'package-name';
+        packageName.textContent = pkg.packageName;
+        infoCell.appendChild(packageName);
+    }
 
     const version = document.createElement('div');
     version.className = 'version';
-    version.textContent = `${pkg.versionName} (${pkg.versionCode})`;
-
-    infoCell.appendChild(label);
-    infoCell.appendChild(packageName);
+    version.textContent = isError ? pkg.error : `${pkg.versionName} (${pkg.versionCode})`;
     infoCell.appendChild(version);
 
     const typeCell = document.createElement('td');
-    typeCell.className = `app-type ${pkg.isSystem ? 'system' : 'user'}`;
-    typeCell.textContent = pkg.isSystem ? 'system' : 'user';
+    typeCell.className = 'app-type';
+    if (isError) {
+        typeCell.classList.add('error');
+        typeCell.textContent = 'error';
+    } else if (pkg.isSystem === null || pkg.isSystem === undefined) {
+        typeCell.classList.add('unknown');
+        typeCell.textContent = 'unknown';
+    } else {
+        typeCell.classList.add(pkg.isSystem ? 'system' : 'user');
+        typeCell.textContent = pkg.isSystem ? 'system' : 'user';
+    }
 
     const uidCell = document.createElement('td');
     uidCell.className = 'app-uid';
-    uidCell.textContent = String(pkg.uid);
+    uidCell.textContent = pkg.uid === null || pkg.uid === undefined ? '—' : String(pkg.uid);
 
     row.appendChild(iconCell);
     row.appendChild(infoCell);
@@ -140,14 +221,21 @@ function createPackageRow(pkg) {
     return row;
 }
 
+function demoDescription() {
+    const base = 'List installed packages and render app info with icons.';
+    return pm.support
+        ? `${base} Using the new pm interface.`
+        : `${base} ksu.pm is not available, falling back to the deprecated listPackages/getPackagesInfo exports.`;
+}
+
 async function renderPackagesTable() {
     const container = document.createElement('div');
     container.className = 'pm-container';
     container.innerHTML = '<div class="loading">Loading packages...</div>';
 
     try {
-        const packages = await listPackages('all');
-        const packageInfos = await getPackagesInfo(packages);
+        const packages = await packageApi.listPackages('all');
+        const packageInfos = await packageApi.getPackagesInfo(packages);
         const table = document.createElement('table');
         table.className = 'pm-table';
         table.innerHTML = `<thead><tr><th>Icon</th><th>App Info</th><th>Type</th><th>UID</th></tr></thead><tbody></tbody>`;
