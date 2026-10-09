@@ -259,4 +259,125 @@ function getPackagesInfo(pkg) {
     });
 }
 
-export { exec, spawn, fullScreen, enableEdgeToEdge, toast, listPackages, getPackagesInfo };
+
+/**
+ * Root-backed file system APIs added by KernelSU's modern WebUI File API.
+ */
+const io = {
+    get support() {
+        return typeof globalThis.ksu?.io === 'function';
+    },
+
+    File(path) {
+        const impl = globalThis.ksu.io().File(path);
+        return {
+            exists() { return impl.exists(); },
+            isFile() { return impl.isFile(); },
+            isDirectory() { return impl.isDirectory(); },
+            canRead() { return impl.canRead(); },
+            canWrite() { return impl.canWrite(); },
+            canExecute() { return impl.canExecute(); },
+            createNewFile() { return impl.createNewFile(); },
+            delete() { return impl.delete(); },
+            deleteRecursive() { return impl.deleteRecursive(); },
+            mkdir() { return impl.mkdir(); },
+            mkdirs() { return impl.mkdirs(); },
+            renameTo(destPath) { return impl.renameTo(destPath); },
+            list() {
+                try {
+                    return JSON.parse(impl.list() || '[]');
+                } catch {
+                    return [];
+                }
+            },
+            listFiles() {
+                try {
+                    return JSON.parse(impl.listFiles() || '[]');
+                } catch {
+                    return [];
+                }
+            },
+            length() { return impl.length(); },
+            lastModified() { return impl.lastModified(); },
+            setLastModified(time) { return impl.setLastModified(time); },
+            getAbsolutePath() { return impl.getAbsolutePath(); },
+            getCanonicalPath() { return impl.getCanonicalPath(); },
+            getParent() { return impl.getParent(); },
+            getPath() { return impl.getPath(); },
+            getName() { return impl.getName(); },
+            isHidden() { return impl.isHidden(); },
+            isBlock() { return impl.isBlock(); },
+            isCharacter() { return impl.isCharacter(); },
+            isSymlink() { return impl.isSymlink(); },
+            createNewSymlink(target) { return impl.createNewSymlink(target); },
+            createNewLink(existing) { return impl.createNewLink(existing); },
+            clear() { return impl.clear(); },
+            setReadOnly() { return impl.setReadOnly(); },
+            setReadable(readable, ownerOnly) { return impl.setReadable(readable, ownerOnly); },
+            setWritable(writable, ownerOnly) { return impl.setWritable(writable, ownerOnly); },
+            setExecutable(executable, ownerOnly) { return impl.setExecutable(executable, ownerOnly); },
+            getFreeSpace() { return impl.getFreeSpace(); },
+            getTotalSpace() { return impl.getTotalSpace(); },
+            getUsableSpace() { return impl.getUsableSpace(); },
+            newInputStream() { return impl.newInputStream(); },
+            newOutputStream(append) { return append === undefined ? impl.newOutputStream() : impl.newOutputStream(append); },
+            toString() { return impl.toString(); },
+        };
+    },
+
+    FileInputStream() {
+        const impl = globalThis.ksu.io().FileInputStream();
+        return {
+            open(path) { return impl.open(path); },
+            read(id, maxBytes) { return maxBytes === undefined ? impl.read(id) : impl.read(id, maxBytes); },
+            available(id) { return impl.available(id); },
+            close(id) { return impl.close(id); },
+        };
+    },
+
+    FileOutputStream() {
+        const impl = globalThis.ksu.io().FileOutputStream();
+        return {
+            open(path, append) { return append === undefined ? impl.open(path) : impl.open(path, append); },
+            write(id, base64) { return impl.write(id, base64); },
+            writeByte(id, byte) { return impl.writeByte(id, byte); },
+            flush(id) { return impl.flush(id); },
+            close(id) { return impl.close(id); },
+        };
+    },
+
+    RandomAccessFile() {
+        const impl = globalThis.ksu.io().RandomAccessFile();
+        return {
+            open(path, mode) { return impl.open(path, mode); },
+            read(id) { return impl.read(id); },
+            readBytes(id, length) { return impl.readBytes(id, length); },
+            readBoolean(id) { return impl.readBoolean(id); },
+            readByte(id) { return impl.readByte(id); },
+            readInt(id) { return impl.readInt(id); },
+            readLong(id) { return impl.readLong(id); },
+            readShort(id) { return impl.readShort(id); },
+            readFloat(id) { return impl.readFloat(id); },
+            readDouble(id) { return impl.readDouble(id); },
+            readUTF(id) { return impl.readUTF(id); },
+            readLine(id) { return impl.readLine(id); },
+            write(id, byte) { impl.write(id, byte); },
+            writeBase64(id, base64) { impl.writeBase64(id, base64); },
+            writeBoolean(id, value) { impl.writeBoolean(id, value); },
+            writeByte(id, value) { impl.writeByte(id, value); },
+            writeInt(id, value) { impl.writeInt(id, value); },
+            writeLong(id, value) { impl.writeLong(id, value); },
+            writeShort(id, value) { impl.writeShort(id, value); },
+            writeFloat(id, value) { impl.writeFloat(id, value); },
+            writeDouble(id, value) { impl.writeDouble(id, value); },
+            writeUTF(id, value) { impl.writeUTF(id, value); },
+            seek(id, position) { return impl.seek(id, position); },
+            getFilePointer(id) { return impl.getFilePointer(id); },
+            length(id) { return impl.length(id); },
+            setLength(id, length) { return impl.setLength(id, length); },
+            close(id) { return impl.close(id); },
+        };
+    },
+};
+
+export { exec, spawn, fullScreen, enableEdgeToEdge, toast, listPackages, getPackagesInfo, io };
