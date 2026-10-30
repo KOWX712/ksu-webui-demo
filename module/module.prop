@@ -1,7 +1,7 @@
 id=ksuwebui_demo
 name=KSU WebUI demo
-version=v1-rc.1
-versionCode=1
+version=v3.3.0
+versionCode=330
 author=KOWX712
-description=KernelSU WebUI demo with WebUI X support
+description=KernelSU WebUI javascript interface demo
 updateJson=https://raw.githubusercontent.com/KOWX712/ksu-webui-demo/main/update.json

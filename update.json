@@ -1,6 +1,6 @@
 {
-    "version": "v1-rc.1",
-    "versionCode": 1,
+    "version": "v3.3.0",
+    "versionCode": 330,
     "zipUrl": "https://github.com/KOWX712/ksu-webui-demo/releases/latest/download/KSU_WebUI_demo.zip",
-    "changelog": "https://raw.githubusercontent.com/bindhosts/ksu-webui-demo/main/CHANGELOG.md"
+    "changelog": "https://raw.githubusercontent.com/KOWX712/ksu-webui-demo/main/CHANGELOG.md"
 }

@@ -14,4 +14,4 @@ authors:
     url: https://github.com/KOWX712
 
 release:
-  assetPattern: "ksu-webui-demo*.zip"
+  assetPattern: "KSU_WebUI_demo.zip"
