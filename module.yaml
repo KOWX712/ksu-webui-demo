@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/KernelSU-Modules/tools/main/schemas/module.schema.json
+schemaVersion: 1
+id: ksuwebui_demo
+name: KSU WebUI demo
+summary: KernelSU WebUI javascript interface demo
+description: README.md
+license: MIT
+homepage: https://github.com/KOWX712/ksu-webui-demo
+support: https://github.com/KOWX712/ksu-webui-demo/issues
+tags: [ksuwebui]
+
+authors:
+  - name: KOWX712
+    url: https://github.com/KOWX712
+
+release:
+  assetPattern: "ksu-webui-demo*.zip"
